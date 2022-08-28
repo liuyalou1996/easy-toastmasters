@@ -1,19 +1,13 @@
 package com.universe.toastmasters.pojo.model;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author 刘亚楼
  * @date 2022/8/27
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class AhCounterDataModel {
 
 	/**
@@ -41,7 +35,7 @@ public class AhCounterDataModel {
 	private String wordOfAh;
 
 	/**
-	 * 哼哈词：额
+	 * 哼哈词：呃
 	 */
 	@ExcelProperty(index = 4, value = "呃")
 	private String wordOfEh;
