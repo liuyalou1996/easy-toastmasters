@@ -57,10 +57,27 @@
         </encoder>
     </appender>
 
-    <logger name="com.alibaba.druid">
-        <appender-ref ref="druidLogAppender"/>
-        <appender-ref ref="errorLogAppender"/>
-    </logger>
+    <springProfile name="dev">
+        <logger name="com.universe.toastmasters">
+            <appender-ref ref="appLogAppender"/>
+            <appender-ref ref="errorLogAppender"/>
+        </logger>
+        <logger name="com.alibaba.druid">
+            <appender-ref ref="druidLogAppender"/>
+            <appender-ref ref="errorLogAppender"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.universe.toastmasters" level="INFO" additivity="false">
+            <appender-ref ref="appLogAppender"/>
+            <appender-ref ref="errorLogAppender"/>
+        </logger>
+        <logger name="com.alibaba.druid" level="INFO" additivity="false">
+            <appender-ref ref="druidLogAppender"/>
+            <appender-ref ref="errorLogAppender"/>
+        </logger>
+    </springProfile>
 
     <root level="INFO">
         <appender-ref ref="consoleAppender"/>

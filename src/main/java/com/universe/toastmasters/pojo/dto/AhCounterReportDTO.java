@@ -1,4 +1,4 @@
-package com.universe.toastmasters.pojo.model;
+package com.universe.toastmasters.pojo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AhCounterReportModel {
+public class AhCounterReportDTO {
 
 	/**
 	 * 汇报人
@@ -25,6 +25,6 @@ public class AhCounterReportModel {
 	/**
 	 * 列表
 	 */
-	private List<AhCounterDataModel> dataModelList;
+	private List<AhCounterReportDTO> reportDTOList;
 
 }
