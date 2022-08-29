@@ -25,6 +25,6 @@ public class AhCounterReportDTO {
 	/**
 	 * 列表
 	 */
-	private List<AhCounterDataDTO> reportDTOList;
+	private List<AhCounterDataDTO> ahCounterDataDTOList;
 
 }

@@ -28,60 +28,69 @@ public class AhCounterDataDTO {
 	/**
 	 * 哼哈词：嗯
 	 */
-	private Integer wordOfEm;
+	private int wordOfEm;
 
 	/**
 	 * 哼哈词：啊
 	 */
-	private Integer wordOfAh;
+	private int wordOfAh;
 
 	/**
 	 * 哼哈词：额
 	 */
-	private Integer wordOfEh;
+	private int wordOfEh;
 
 	/**
 	 * 哼哈词：好
 	 */
-	private Integer wordOfHao;
+	private int wordOfHao;
 
 	/**
 	 * 哼哈词：对
 	 */
-	private Integer wordOfDui;
+	private int wordOfDui;
 
 	/**
 	 * 哼哈词：那
 	 */
-	private Integer wordOfNa;
+	private int wordOfNa;
 
 	/**
 	 * 哼哈词：这个
 	 */
-	private Integer wordOfThis;
+	private int wordOfThis;
 
 	/**
 	 * 哼哈词：那个
 	 */
-	private Integer wordOfThat;
+	private int wordOfThat;
 
 	/**
 	 * 哼哈词：然后
 	 */
-	private Integer wordOfThen;
+	private int wordOfThen;
 
 	/**
 	 * 哼哈词：那么
 	 */
-	private Integer wordOfSo;
+	private int wordOfSo;
 
 	/**
 	 * 哼哈词：我们
 	 */
-	private Integer wordOfUs;
+	private int wordOfUs;
 
 	/**
 	 * 哼哈词：就是说
 	 */
-	private Integer wordOfThatIs;
+	private int wordOfThatIs;
+
+	/**
+	 * 获取哼哈词使用次数
+	 * @return
+	 */
+	public int getAhWordsUsedCount() {
+		return this.wordOfEm + this.wordOfAh + this.wordOfEh + this.wordOfHao + this.wordOfDui + this.wordOfNa + this.wordOfThis + this.wordOfThat + this.wordOfThen + this.wordOfSo + this.wordOfUs
+			+ this.wordOfThatIs;
+	}
 }

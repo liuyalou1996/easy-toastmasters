@@ -3,6 +3,10 @@ package com.universe.toastmasters.pojo.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,8 +14,12 @@ import java.time.LocalDateTime;
  * Ah-counter统计报告表
  *
  * @author Nick Liu
- * @since 2022-08-27
+ * @since 2022-08-29
  */
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("t_ahcounter_report")
 public class AhcounterReportDO {
 
@@ -32,29 +40,28 @@ public class AhcounterReportDO {
 	private String ahCounter;
 
 	/**
-	 * 哼哈官汇报解析结果Json
+	 * 汇报解析结果，以Json格式保存
 	 */
-	private String resolvedResultJson;
-
-	/**
-	 * 角色名
-	 */
-	private String role;
-
-	/**
-	 * 姓名
-	 */
-	private String name;
+	private String resolvedReportJson;
 
 	/**
 	 * 哼哈词总使用次数
 	 */
 	private Integer totalUsed;
 
-	private String frequentlyUsedWordsTop3;
+	/**
+	 * 哼哈词使用频率最高前3，以Json格式保存
+	 */
+	private String mostUsedWordTop3;
 
+	/**
+	 * 哼哈词使用次数最多姓名前3，以Json格式保存
+	 */
 	private String mostUsedNameTop3;
 
+	/**
+	 * 哼哈词使用次数最少姓名前3，以Json格式保存
+	 */
 	private String leastUsedNameTop3;
 
 	/**
@@ -86,28 +93,12 @@ public class AhcounterReportDO {
 		this.ahCounter = ahCounter;
 	}
 
-	public String getResolvedResultJson() {
-		return resolvedResultJson;
+	public String getResolvedReportJson() {
+		return resolvedReportJson;
 	}
 
-	public void setResolvedResultJson(String resolvedResultJson) {
-		this.resolvedResultJson = resolvedResultJson;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setResolvedReportJson(String resolvedReportJson) {
+		this.resolvedReportJson = resolvedReportJson;
 	}
 
 	public Integer getTotalUsed() {
@@ -118,12 +109,12 @@ public class AhcounterReportDO {
 		this.totalUsed = totalUsed;
 	}
 
-	public String getFrequentlyUsedWordsTop3() {
-		return frequentlyUsedWordsTop3;
+	public String getMostUsedWordTop3() {
+		return mostUsedWordTop3;
 	}
 
-	public void setFrequentlyUsedWordsTop3(String frequentlyUsedWordsTop3) {
-		this.frequentlyUsedWordsTop3 = frequentlyUsedWordsTop3;
+	public void setMostUsedWordTop3(String mostUsedWordTop3) {
+		this.mostUsedWordTop3 = mostUsedWordTop3;
 	}
 
 	public String getMostUsedNameTop3() {
@@ -152,9 +143,7 @@ public class AhcounterReportDO {
 
 	@Override
 	public String toString() {
-		return "AhcounterReportDO{" + "id=" + id + ", reportNo=" + reportNo + ", ahCounter=" + ahCounter + ", resolvedResultJson="
-			+ resolvedResultJson + ", role=" + role + ", name=" + name + ", totalUsed=" + totalUsed + ", frequentlyUsedWordsTop3="
-			+ frequentlyUsedWordsTop3 + ", mostUsedNameTop3=" + mostUsedNameTop3 + ", leastUsedNameTop3=" + leastUsedNameTop3 + ", createTime="
-			+ createTime + "}";
+		return "AhcounterReportDO{" + "id=" + id + ", reportNo=" + reportNo + ", ahCounter=" + ahCounter + ", resolvedReportJson=" + resolvedReportJson + ", totalUsed=" + totalUsed + ", mostUsedWordTop3="
+			+ mostUsedWordTop3 + ", mostUsedNameTop3=" + mostUsedNameTop3 + ", leastUsedNameTop3=" + leastUsedNameTop3 + ", createTime=" + createTime + "}";
 	}
 }
