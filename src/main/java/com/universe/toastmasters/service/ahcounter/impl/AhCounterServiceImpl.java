@@ -92,8 +92,16 @@ public class AhCounterServiceImpl implements AhCounterService {
 	@Override
 	public AhCounterReportOverviewVO queryReportOverview(long reportNo) {
 		AhCounterReportDO ahCounterReportDO = ahCounterReportManager.getAhCounterReport(reportNo);
-		Map<String, Integer> map = FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedInfoPerGuest());
-		return AhCounterReportOverviewVO.builder().build();
+		return AhCounterReportOverviewVO.builder()
+			.reportNo(reportNo)
+			.ahCounter(ahCounterReportDO.getAhCounter())
+			.totalUsed(ahCounterReportDO.getTotalUsed())
+			.usedWordAndCount(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedWordAndCount()))
+			.usedGuestAndCount(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedGuestAndCount()))
+			.mostUsedWordTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getMostUsedWordTop3()))
+			.mostUsedGuestTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getMostUsedGuestTop3()))
+			.leastUsedGuestTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getLeastUsedGuestTop3()))
+			.build();
 	}
 
 }
