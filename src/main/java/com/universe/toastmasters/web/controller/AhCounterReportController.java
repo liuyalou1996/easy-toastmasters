@@ -28,8 +28,8 @@ public class AhCounterReportController {
 
 	@ResponseBody
 	@PostMapping("/upload")
-	public ApiResponse<Long> resolveAhCounterReport(MultipartFile multipartFile) throws IOException {
-		AhCounterReportDTO ahCounterReportDTO = ahCounterService.resolveAhCounterReport(multipartFile.getInputStream());
+	public ApiResponse<Long> resolveAhCounterReport(MultipartFile file) throws IOException {
+		AhCounterReportDTO ahCounterReportDTO = ahCounterService.resolveAhCounterReport(file.getInputStream());
 		ahCounterService.saveAhCounterReport(ahCounterReportDTO);
 		return ApiResponse.success();
 	}

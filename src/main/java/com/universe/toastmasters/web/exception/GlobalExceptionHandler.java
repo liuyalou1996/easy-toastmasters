@@ -3,6 +3,7 @@ package com.universe.toastmasters.web.exception;
 import com.universe.toastmasters.constant.ErrorCode;
 import com.universe.toastmasters.pojo.ApiResponse;
 import com.universe.toastmasters.util.MessageUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @author 刘亚楼
  * @date 2020/10/27
  */
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -35,8 +37,9 @@ public class GlobalExceptionHandler {
 		// 检验失败默认消息
 		String defaultMessage = fieldError.getDefaultMessage();
 
-		List<Object> args = Arrays.stream(Optional.ofNullable(fieldError.getArguments()).orElse(new Object[] {}))
-			.filter(argument -> !(argument instanceof DefaultMessageSourceResolvable)).map(Object::toString).collect(Collectors.toList());
+		List<Object> args =
+			Arrays.stream(Optional.ofNullable(fieldError.getArguments()).orElse(new Object[] {})).filter(argument -> !(argument instanceof DefaultMessageSourceResolvable)).map(Object::toString)
+				.collect(Collectors.toList());
 		args.add(0, field);
 
 		// 默认根据注解名称取，如果没有则取默认消息
@@ -48,17 +51,18 @@ public class GlobalExceptionHandler {
 		return ApiResponse.error(ErrorCode.INVALID_PARAM, defaultMessage);
 	}
 
-
 	@ResponseBody
 	@ExceptionHandler(NullPointerException.class)
-	public ApiResponse<Void> handleNullPointerException() {
-		return ApiResponse.error(ErrorCode.SYSTEM_ERROR);
+	public ApiResponse<Void> handleNullPointerException(NullPointerException e) {
+		log.error(e.getMessage(), e);
+		return ApiResponse.error(ErrorCode.SYSTEM_ERROR, e.getMessage());
 	}
 
 	@ResponseBody
 	@ExceptionHandler(Exception.class)
-	public ApiResponse<Void> handleException() {
-		return ApiResponse.error(ErrorCode.SYSTEM_ERROR);
+	public ApiResponse<Void> handleException(Exception e) {
+		log.error(e.getMessage(), e);
+		return ApiResponse.error(ErrorCode.SYSTEM_ERROR, e.getMessage());
 	}
 
 }
