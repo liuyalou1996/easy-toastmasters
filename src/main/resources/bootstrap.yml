@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ip2geo
+    name: easy-toastmasters
 
 server:
   port: 8080

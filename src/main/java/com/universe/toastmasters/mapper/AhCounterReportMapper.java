@@ -1,6 +1,6 @@
 package com.universe.toastmasters.mapper;
 
-import com.universe.toastmasters.pojo.domain.AhcounterReportDO;
+import com.universe.toastmasters.pojo.domain.AhCounterReportDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Nick Liu
  * @since 2022-08-27
  */
-public interface AhcounterReportMapper extends BaseMapper<AhcounterReportDO> {
+public interface AhCounterReportMapper extends BaseMapper<AhCounterReportDO> {
 
 }

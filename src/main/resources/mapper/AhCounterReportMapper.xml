@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.universe.toastmasters.mapper.AhCounterReportMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.universe.toastmasters.pojo.domain.AhCounterReportDO">
+        <id column="id" property="id" />
+        <result column="report_no" property="reportNo" />
+        <result column="ah_counter" property="ahCounter" />
+        <result column="resolved_report_json" property="resolvedReportJson" />
+        <result column="total_used" property="totalUsed" />
+        <result column="used_info_per_guest" property="usedInfoPerGuest" />
+        <result column="used_word_and_count" property="usedWordAndCount" />
+        <result column="most_used_word_top3" property="mostUsedWordTop3" />
+        <result column="used_guest_and_count" property="usedGuestAndCount" />
+        <result column="most_used_guest_top3" property="mostUsedGuestTop3" />
+        <result column="least_used_guest_top3" property="leastUsedGuestTop3" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, report_no, ah_counter, resolved_report_json, total_used, used_info_per_guest, used_word_and_count, most_used_word_top3, used_guest_and_count, most_used_guest_top3, least_used_guest_top3, create_time
+    </sql>
+
+</mapper>
