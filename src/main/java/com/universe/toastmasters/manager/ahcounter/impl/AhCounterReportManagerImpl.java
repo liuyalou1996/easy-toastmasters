@@ -1,5 +1,8 @@
 package com.universe.toastmasters.manager.ahcounter.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.universe.toastmasters.constant.CommonConst;
 import com.universe.toastmasters.manager.ahcounter.AhCounterReportManager;
 import com.universe.toastmasters.mapper.AhCounterReportMapper;
 import com.universe.toastmasters.pojo.domain.AhCounterReportDO;
@@ -92,6 +95,14 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 		ahCounterReportMapper.insert(ahCounterReportDO);
 
 		return reportNo;
+	}
+
+	@Override
+	public AhCounterReportDO getAhCounterReport(long reportNo){
+		Wrapper<AhCounterReportDO> wrapper = Wrappers.lambdaQuery(AhCounterReportDO.class)
+			.eq(AhCounterReportDO::getReportNo, reportNo)
+			.last(CommonConst.LIMIT_SQL);
+		return ahCounterReportMapper.selectOne(wrapper);
 	}
 
 	public static void main(String[] args) {

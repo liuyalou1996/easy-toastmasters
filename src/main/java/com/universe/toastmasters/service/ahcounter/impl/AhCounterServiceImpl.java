@@ -1,12 +1,15 @@
 package com.universe.toastmasters.service.ahcounter.impl;
 
 import com.universe.toastmasters.manager.ahcounter.AhCounterReportManager;
+import com.universe.toastmasters.pojo.domain.AhCounterReportDO;
 import com.universe.toastmasters.pojo.dto.AhCounterDataDTO;
 import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
 import com.universe.toastmasters.pojo.model.AhCounterDataModel;
+import com.universe.toastmasters.pojo.vo.AhCounterReportOverviewVO;
 import com.universe.toastmasters.service.ahcounter.AhCounterService;
 import com.universe.toastmasters.service.ahcounter.listener.AhCounterReportListener;
 import com.universe.toastmasters.util.EasyExcelUtils;
+import com.universe.toastmasters.util.FastJsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +87,13 @@ public class AhCounterServiceImpl implements AhCounterService {
 	@Override
 	public Long saveAhCounterReport(AhCounterReportDTO ahCounterReportDTO){
 		return ahCounterReportManager.saveAhCounterReport(ahCounterReportDTO);
+	}
+
+	@Override
+	public AhCounterReportOverviewVO queryReportOverview(long reportNo) {
+		AhCounterReportDO ahCounterReportDO = ahCounterReportManager.getAhCounterReport(reportNo);
+		Map<String, Integer> map = FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedInfoPerGuest());
+		return AhCounterReportOverviewVO.builder().build();
 	}
 
 }
