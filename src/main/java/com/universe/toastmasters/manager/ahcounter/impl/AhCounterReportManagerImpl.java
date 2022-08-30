@@ -16,7 +16,6 @@ import org.springframework.util.ReflectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,29 +55,25 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 			);
 
 		// 使用频率最高哼哈词前3
-		List<Entry<String, Integer>> mostUsedWordTop3List = usedWordAndCount.entrySet()
-			.stream()
+		Map<String, Integer>  mostUsedWordTop3 = usedWordAndCount.entrySet().stream()
 			.sorted(Entry.<String, Integer>comparingByValue().reversed())
 			.limit(3)
-			.collect(Collectors.toList());
-		Map<String, Integer> mostUsedWordTop3 = mostUsedWordTop3List.stream()
-			.collect(Collectors.toMap(Entry::getKey,Entry::getValue,(first, second) -> second, LinkedHashMap::new));
+			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
 		// 哼哈词使用名字和总次数
 		Map<String, Integer> usedGuestAndCount = dataDTOList.stream()
 			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
 
 		// 哼哈词使用次数最多前3的名字和使用次数
-		Map<String, Integer> mostUsedGuestTop3 = dataDTOList.stream()
-			.sorted(Comparator.comparing(AhCounterDataDTO::getAhWordsUsedCount).reversed())
-			.limit(3)
-			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
+		Map<String, Integer> mostUsedGuestTop3 = usedGuestAndCount.entrySet().stream()
+			.sorted(Entry.<String,Integer>comparingByValue().reversed())
+			.limit(3).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
 		// 哼哈词使用次数最少前3的名字和使用次数
-		Map<String, Integer> leastUsedGuestTop3 = dataDTOList.stream()
-			.sorted(Comparator.comparing(AhCounterDataDTO::getAhWordsUsedCount))
+		Map<String, Integer> leastUsedGuestTop3 = usedGuestAndCount.entrySet().stream()
+			.sorted(Entry.comparingByValue())
 			.limit(3)
-			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
+			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
 		// 入库并返回报告编号
 		long reportNo = SnowFlakeUtils.nextId();
