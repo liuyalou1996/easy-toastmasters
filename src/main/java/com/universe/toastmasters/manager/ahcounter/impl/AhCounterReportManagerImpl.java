@@ -17,7 +17,6 @@ import org.springframework.util.ReflectionUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -100,12 +99,12 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 	 */
 	private Map<String, AhCounterDataDTO> calAhWordsUsedInfoPerGuest(List<AhCounterDataDTO> dataDTOList) {
 		Map<String, List<AhCounterDataDTO>> usedInfoPerGuestMapping = dataDTOList.stream()
-			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, LinkedHashMap::new, Collectors.toList()));
+			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.toList()));
 
 		Map<String, AhCounterDataDTO> usedInfoPerGuest = new HashMap<>();
-		usedInfoPerGuestMapping.entrySet().forEach(entry -> {
+		usedInfoPerGuestMapping.forEach((key, value) -> {
 			AhCounterDataDTO ahCounterDataDTO = new AhCounterDataDTO();
-			entry.getValue().forEach(dataDTO -> {
+			value.forEach(dataDTO -> {
 				ahCounterDataDTO.setRole(dataDTO.getRole());
 				ahCounterDataDTO.setName(dataDTO.getName());
 				ahCounterDataDTO.setWordOfEm(ahCounterDataDTO.getWordOfEm() + dataDTO.getWordOfEm());
