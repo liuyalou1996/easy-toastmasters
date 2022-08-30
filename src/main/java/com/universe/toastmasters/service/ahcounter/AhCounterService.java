@@ -1,6 +1,7 @@
 package com.universe.toastmasters.service.ahcounter;
 
 import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
+import com.universe.toastmasters.pojo.vo.AhCounterReportDetailVO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportOverviewVO;
 
 import java.io.InputStream;
@@ -31,4 +32,11 @@ public interface AhCounterService {
 	 * @return
 	 */
 	AhCounterReportOverviewVO queryReportOverview(long reportNo);
+
+	/**
+	 * 查询报告详情
+	 * @param reportNo
+	 * @return
+	 */
+	AhCounterReportDetailVO queryReportDetail(long reportNo);
 }

@@ -58,7 +58,7 @@
     </appender>
 
     <springProfile name="dev">
-        <logger name="com.universe.toastmasters">
+        <logger name="com.universe.toastmasters" level="DEBUG">
             <appender-ref ref="appLogAppender"/>
             <appender-ref ref="errorLogAppender"/>
         </logger>

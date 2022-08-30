@@ -139,6 +139,8 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 		return ahCounterReportMapper.selectOne(wrapper);
 	}
 
+
+
 	public static void main(String[] args) {
 		List<AhCounterDataDTO> dataDTOList = new ArrayList<>();
 		AhCounterDataDTO ahCounterDataDTO1 = AhCounterDataDTO.builder().name("Nick").wordOfAh(2).wordOfEm(10).build();

@@ -5,6 +5,7 @@ import com.universe.toastmasters.pojo.domain.AhCounterReportDO;
 import com.universe.toastmasters.pojo.dto.AhCounterDataDTO;
 import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
 import com.universe.toastmasters.pojo.model.AhCounterDataModel;
+import com.universe.toastmasters.pojo.vo.AhCounterReportDetailVO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportOverviewVO;
 import com.universe.toastmasters.service.ahcounter.AhCounterService;
 import com.universe.toastmasters.service.ahcounter.listener.AhCounterReportListener;
@@ -93,6 +94,7 @@ public class AhCounterServiceImpl implements AhCounterService {
 	public AhCounterReportOverviewVO queryReportOverview(long reportNo) {
 		AhCounterReportDO ahCounterReportDO = ahCounterReportManager.getAhCounterReport(reportNo);
 		return AhCounterReportOverviewVO.builder()
+			.id(ahCounterReportDO.getId())
 			.reportNo(reportNo)
 			.ahCounter(ahCounterReportDO.getAhCounter())
 			.totalUsed(ahCounterReportDO.getTotalUsed())
@@ -103,5 +105,15 @@ public class AhCounterServiceImpl implements AhCounterService {
 			.leastUsedGuestTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getLeastUsedGuestTop3()))
 			.build();
 	}
+
+	@Override
+	public AhCounterReportDetailVO queryReportDetail(long reportNo) {
+		AhCounterReportDO ahCounterReportDO = ahCounterReportManager.getAhCounterReport(reportNo);
+		return FastJsonUtils.toJavaBean(ahCounterReportDO.getUsedInfoPerGuest(), AhCounterReportDetailVO.class);
+	}
+
+
+
+
 
 }

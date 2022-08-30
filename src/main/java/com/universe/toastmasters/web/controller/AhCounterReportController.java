@@ -2,6 +2,8 @@ package com.universe.toastmasters.web.controller;
 
 import com.universe.toastmasters.pojo.ApiResponse;
 import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
+import com.universe.toastmasters.pojo.vo.AhCounterReportDetailVO;
+import com.universe.toastmasters.pojo.vo.AhCounterReportOverviewVO;
 import com.universe.toastmasters.service.ahcounter.AhCounterService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,32 +42,42 @@ public class AhCounterReportController {
 	@GetMapping("/template")
 	public ResponseEntity<byte[]> downloadAhCounterReportTemplate() throws IOException {
 		Resource template = new ClassPathResource(String.format("excel/%s", FILE_NAME));
-		byte[] content = FileUtils.readFileToByteArray(template.getFile());
+		byte[] body = FileUtils.readFileToByteArray(template.getFile());
 
 		HttpHeaders respHeaders = new HttpHeaders();
 		respHeaders.setContentDisposition(ContentDisposition.attachment().filename(FILE_NAME, StandardCharsets.UTF_8).build());
 		respHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
-		return new ResponseEntity<>(content, respHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<>(body, respHeaders, HttpStatus.CREATED);
 	}
 
 	@ResponseBody
 	@PostMapping("/upload")
 	public ApiResponse<Long> resolveAhCounterReport(MultipartFile file) throws IOException {
 		AhCounterReportDTO ahCounterReportDTO = ahCounterService.resolveAhCounterReport(file.getInputStream());
-		ahCounterService.saveAhCounterReport(ahCounterReportDTO);
-		return ApiResponse.success();
+		return ApiResponse.success(ahCounterService.saveAhCounterReport(ahCounterReportDTO));
 	}
 
 	@ResponseBody
 	@GetMapping("/overview/{reportNo}")
-	public ApiResponse<Void> queryAhCounterReportOverview(@PathVariable("reportNo") String reportNo) {
-		return ApiResponse.success();
+	public ApiResponse<AhCounterReportOverviewVO> queryAhCounterReportOverview(@PathVariable("reportNo") long reportNo) {
+		return ApiResponse.success(ahCounterService.queryReportOverview(reportNo));
 	}
 
-	@GetMapping("/overview")
+	@ResponseBody
+	@GetMapping("/detail/{reportNo}")
+	public ApiResponse<AhCounterReportDetailVO> queryAhCounterReportDetail(@PathVariable("reportNo") long reportNo) {
+		return ApiResponse.success(ahCounterService.queryReportDetail(reportNo));
+	}
+
+	@GetMapping("/page/overview")
 	public ModelAndView trunToReportOverviewPage() {
-		return new ModelAndView("ahcounter-report");
+		return new ModelAndView("report-overview");
+	}
+
+	@GetMapping("page/detail")
+	public ModelAndView trunToReportDetailPage() {
+		return new ModelAndView("report-detail");
 	}
 
 }
