@@ -34,8 +34,14 @@ public class AhCounterReportController {
 		return ApiResponse.success();
 	}
 
+	@ResponseBody
 	@GetMapping("/overview/{reportNo}")
-	public ModelAndView reportOverview(@PathVariable("reportNo") long reportNo) {
+	public ApiResponse<Void> queryAhCounterReportOverview(@PathVariable("reportNo") String reportNo) {
+		return ApiResponse.success();
+	}
+
+	@GetMapping("/overview")
+	public ModelAndView reportOverview() {
 		ModelAndView modelAndView = new ModelAndView("ahcounter-report");
 		return modelAndView;
 	}
