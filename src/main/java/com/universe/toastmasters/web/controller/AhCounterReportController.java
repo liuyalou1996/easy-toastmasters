@@ -3,7 +3,15 @@ package com.universe.toastmasters.web.controller;
 import com.universe.toastmasters.pojo.ApiResponse;
 import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
 import com.universe.toastmasters.service.ahcounter.AhCounterService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author 刘亚楼
@@ -23,8 +32,22 @@ import java.io.IOException;
 @RequestMapping("/ah-counter/report")
 public class AhCounterReportController {
 
+	private static final String FILE_NAME = "哼哈官汇报模板.xlsx";
+
 	@Autowired
 	private AhCounterService ahCounterService;
+
+	@GetMapping("/template")
+	public ResponseEntity<byte[]> downloadAhCounterReportTemplate() throws IOException {
+		Resource template = new ClassPathResource(String.format("excel/%s", FILE_NAME));
+		byte[] content = FileUtils.readFileToByteArray(template.getFile());
+
+		HttpHeaders respHeaders = new HttpHeaders();
+		respHeaders.setContentDisposition(ContentDisposition.attachment().filename(FILE_NAME, StandardCharsets.UTF_8).build());
+		respHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+		return new ResponseEntity<>(content, respHeaders, HttpStatus.CREATED);
+	}
 
 	@ResponseBody
 	@PostMapping("/upload")
@@ -41,9 +64,8 @@ public class AhCounterReportController {
 	}
 
 	@GetMapping("/overview")
-	public ModelAndView reportOverview() {
-		ModelAndView modelAndView = new ModelAndView("ahcounter-report");
-		return modelAndView;
+	public ModelAndView trunToReportOverviewPage() {
+		return new ModelAndView("ahcounter-report");
 	}
 
 }
