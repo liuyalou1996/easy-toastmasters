@@ -70,14 +70,18 @@ public class AhCounterReportController {
 		return ApiResponse.success(ahCounterService.queryReportDetail(reportNo));
 	}
 
-	@GetMapping("/page/overview")
-	public ModelAndView trunToReportOverviewPage() {
-		return new ModelAndView("report-overview");
+	@GetMapping("/page/overview/{reportNo}")
+	public ModelAndView turnToReportOverviewPage(@PathVariable long reportNo) {
+		ModelAndView modelAndView = new ModelAndView("report-overview");
+		modelAndView.addObject(reportNo);
+		return modelAndView;
 	}
 
-	@GetMapping("page/detail")
-	public ModelAndView trunToReportDetailPage() {
-		return new ModelAndView("report-detail");
+	@GetMapping("page/detail/{reportNo}")
+	public ModelAndView turnToReportDetailPage(@PathVariable long reportNo) {
+		ModelAndView modelAndView = new ModelAndView("report-overview");
+		modelAndView.addObject(reportNo);
+		return modelAndView;
 	}
 
 }
