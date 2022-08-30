@@ -66,19 +66,19 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 
 		// 哼哈词使用名字和总次数
 		Map<String, Integer> usedGuestAndCount = dataDTOList.stream()
-			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, LinkedHashMap::new, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
+			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
 
 		// 哼哈词使用次数最多前3的名字和使用次数
 		Map<String, Integer> mostUsedGuestTop3 = dataDTOList.stream()
 			.sorted(Comparator.comparing(AhCounterDataDTO::getAhWordsUsedCount).reversed())
 			.limit(3)
-			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, LinkedHashMap::new, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
+			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
 
 		// 哼哈词使用次数最少前3的名字和使用次数
 		Map<String, Integer> leastUsedGuestTop3 = dataDTOList.stream()
 			.sorted(Comparator.comparing(AhCounterDataDTO::getAhWordsUsedCount))
 			.limit(3)
-			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, LinkedHashMap::new, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
+			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
 
 		// 入库并返回报告编号
 		long reportNo = SnowFlakeUtils.nextId();
