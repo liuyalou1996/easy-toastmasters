@@ -25,7 +25,7 @@ public class AhCounterReportOverviewVO {
 	/**
 	 * 报表编号
 	 */
-	private Long reportNo;
+	private String reportNo;
 
 	/**
 	 * 哼哈官名称

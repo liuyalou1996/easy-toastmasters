@@ -45,6 +45,11 @@ public class AhCounterReportDO {
 	private String resolvedReportJson;
 
 	/**
+	 * 哼哈词名称中英文映射
+	 */
+	private String ahWordsNameMapping;
+
+	/**
 	 * 哼哈词总使用次数
 	 */
 	private Integer totalUsed;

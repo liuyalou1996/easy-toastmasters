@@ -5,6 +5,7 @@ create table t_ah_counter_report
     report_no             bigint        default 0                 not null comment '报表编号',
     ah_counter            varchar(16)   default ''                not null comment '哼哈官名称',
     resolved_report_json  mediumtext                              not null comment '哼哈官汇报解析结果，以Json格式保存',
+    ah_words_name_mapping varchar(512)  default ''                not null comment '哼哈词名称中英文映射',
     total_used            smallint      default 0                 not null comment '哼哈词总使用次数',
     used_info_per_guest   mediumtext                              not null comment '每位嘉宾哼哈词使用情况',
     used_word_and_count   varchar(1024) default ''                not null comment '哼哈词及使用次数映射',

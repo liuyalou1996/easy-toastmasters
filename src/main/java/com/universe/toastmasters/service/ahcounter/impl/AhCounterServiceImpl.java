@@ -1,5 +1,6 @@
 package com.universe.toastmasters.service.ahcounter.impl;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.universe.toastmasters.manager.ahcounter.AhCounterReportManager;
 import com.universe.toastmasters.pojo.domain.AhCounterReportDO;
 import com.universe.toastmasters.pojo.dto.AhCounterDataDTO;
@@ -16,8 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,8 +41,8 @@ public class AhCounterServiceImpl implements AhCounterService {
 		List<AhCounterDataModel> dataModelList = new ArrayList<>();
 		Consumer<List<AhCounterDataModel>> dataRowConsumer = dataModelList::addAll;
 
-		Map<Integer, String> headRowMap = new HashMap<>();
-		Consumer<Map<Integer, String>> headRowConsumer = headRowMap::putAll;
+		List<Map<Integer, String>> headRowList = new ArrayList<>();
+		Consumer<Map<Integer, String>> headRowConsumer = headRowList::add;
 
 		AhCounterReportListener listener = new AhCounterReportListener(100, dataRowConsumer, headRowConsumer);
 		// 异步读取Excel
@@ -66,14 +68,23 @@ public class AhCounterServiceImpl implements AhCounterService {
 			return ahCounterDataDTO;
 		}).collect(Collectors.toList());
 
-		String ahCounter = headRowMap.values()
+		// 哼哈官名字
+		String ahCounter = headRowList.get(0).values()
 			.stream()
 			.findFirst()
 			.map(content -> StringUtils.trim(content.split(":")[1]))
 			.orElse(StringUtils.EMPTY);
 
+		// 哼哈词中英文名映射
+		Map<Integer, String> indexAndColMap = headRowList.get(1);
+		Map<String, String> ahWordsNameMapping = Arrays.stream(AhCounterDataModel.class.getDeclaredFields())
+			.collect(
+				Collectors.toMap(Field::getName, field -> indexAndColMap.get(field.getAnnotation(ExcelProperty.class).index()))
+			);
+
 		return AhCounterReportDTO.builder()
 			.ahCounter(ahCounter)
+			.ahWordsNameMapping(ahWordsNameMapping)
 			.ahCounterDataDTOList(ahcounterReportDTOList)
 			.build();
 	}
@@ -93,9 +104,13 @@ public class AhCounterServiceImpl implements AhCounterService {
 	@Override
 	public AhCounterReportOverviewVO queryReportOverview(long reportNo) {
 		AhCounterReportDO ahCounterReportDO = ahCounterReportManager.getAhCounterReport(reportNo);
+		if (ahCounterReportDO == null) {
+			return AhCounterReportOverviewVO.builder().build();
+		}
+
 		return AhCounterReportOverviewVO.builder()
 			.id(ahCounterReportDO.getId())
-			.reportNo(reportNo)
+			.reportNo(String.valueOf(reportNo))
 			.ahCounter(ahCounterReportDO.getAhCounter())
 			.totalUsed(ahCounterReportDO.getTotalUsed())
 			.usedWordAndCount(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedWordAndCount()))
@@ -109,6 +124,10 @@ public class AhCounterServiceImpl implements AhCounterService {
 	@Override
 	public AhCounterReportDetailVO queryReportDetail(long reportNo) {
 		AhCounterReportDO ahCounterReportDO = ahCounterReportManager.getAhCounterReport(reportNo);
+		if (ahCounterReportDO == null) {
+			return new AhCounterReportDetailVO();
+		}
+
 		return FastJsonUtils.toJavaBean(ahCounterReportDO.getUsedInfoPerGuest(), AhCounterReportDetailVO.class);
 	}
 

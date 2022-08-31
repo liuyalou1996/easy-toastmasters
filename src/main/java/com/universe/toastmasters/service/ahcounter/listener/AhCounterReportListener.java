@@ -40,7 +40,6 @@ public class AhCounterReportListener extends AnalysisEventListener<AhCounterData
 		if (result.size() >= dataRowBatchCount) {
 			invokeCallback();
 		}
-
 	}
 
 	@Override
@@ -60,7 +59,7 @@ public class AhCounterReportListener extends AnalysisEventListener<AhCounterData
 		log.info("Begin to read sheet head row, current row index: {}", readRowHolder.getRowIndex());
 
 		// 只解析第二行的数据
-		if (rowIndex == 1) {
+		if (rowIndex == 1 || rowIndex == 2) {
 			headRowConsumer.accept(headMap);
 		}
 	}

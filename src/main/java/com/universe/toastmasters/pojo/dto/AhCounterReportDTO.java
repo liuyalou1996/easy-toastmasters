@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Nick Liu
@@ -21,6 +22,11 @@ public class AhCounterReportDTO {
 	 * 汇报人
 	 */
 	private String ahCounter;
+
+	/**
+	 * 哼哈词名称中英文映射
+	 */
+	private Map<String, String> ahWordsNameMapping;
 
 	/**
 	 * 列表
