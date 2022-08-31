@@ -80,6 +80,7 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 			.ahCounter(ahCounterReportDTO.getAhCounter())
 			.reportNo(reportNo)
 			.resolvedReportJson(FastJsonUtils.toJsonString(dataDTOList))
+			.ahWordsNameMapping(FastJsonUtils.toJsonString(ahCounterReportDTO.getAhWordsNameMapping()))
 			.totalUsed(totalUsed)
 			.usedInfoPerGuest(FastJsonUtils.toJsonString(usedInfoPerGuest))
 			.usedWordAndCount(FastJsonUtils.toJsonString(usedWordAndCount))

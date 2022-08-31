@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 /**
  * @author 刘亚楼
@@ -56,6 +57,12 @@ public class AhCounterReportController {
 	public ApiResponse<Long> resolveAhCounterReport(MultipartFile file) throws IOException {
 		AhCounterReportDTO ahCounterReportDTO = ahCounterService.resolveAhCounterReport(file.getInputStream());
 		return ApiResponse.success(ahCounterService.saveAhCounterReport(ahCounterReportDTO));
+	}
+
+	@ResponseBody
+	@GetMapping("/ah-words-mapping/{reportNo}")
+	public ApiResponse<Map<String, String>> queryAhWordsNameMapping(@PathVariable("reportNo") long reportNo) {
+		return ApiResponse.success(ahCounterService.queryAhWordsNameMapping(reportNo));
 	}
 
 	@ResponseBody

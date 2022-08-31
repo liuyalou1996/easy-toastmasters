@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -99,6 +100,14 @@ public class AhCounterServiceImpl implements AhCounterService {
 	@Override
 	public Long saveAhCounterReport(AhCounterReportDTO ahCounterReportDTO){
 		return ahCounterReportManager.saveAhCounterReport(ahCounterReportDTO);
+	}
+
+	@Override
+	public Map<String,String> queryAhWordsNameMapping(long reportNo){
+		return Optional.ofNullable(ahCounterReportManager.getAhCounterReport(reportNo))
+			.map(AhCounterReportDO::getAhWordsNameMapping)
+			.map(FastJsonUtils::toStringValMap)
+			.orElse(Collections.emptyMap());
 	}
 
 	@Override

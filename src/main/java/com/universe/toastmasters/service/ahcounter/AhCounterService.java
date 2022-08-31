@@ -5,6 +5,7 @@ import com.universe.toastmasters.pojo.vo.AhCounterReportDetailVO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportOverviewVO;
 
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * @author 刘亚楼
@@ -25,6 +26,13 @@ public interface AhCounterService {
 	 * @return
 	 */
 	Long saveAhCounterReport(AhCounterReportDTO ahCounterReportDTO);
+
+	/**
+	 * 查询指定报告编号哼哈词中英文映射
+	 * @param reportNo
+	 * @return
+	 */
+	Map<String, String> queryAhWordsNameMapping(long reportNo);
 
 	/**
 	 * 查询报告概要
