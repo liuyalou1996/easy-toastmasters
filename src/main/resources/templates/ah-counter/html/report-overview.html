@@ -54,6 +54,7 @@
                 height: 150px;
                 margin-top: 10%;
             }
+
             .loading-wrapper {
                 animation-name: rotateIn; /* referring directly to the animation's @keyframe declaration */
                 animation-duration: 1s; /* don't forget to set a duration! */
@@ -114,12 +115,21 @@
     });
 
     const initOverviewCharts = async () => {
-        let axiosResp = await getAhWordsMapping([[${reportNo}]]);
-        if (!axiosResp.data.success) {
+        // 哼哈词中英文映射
+        let ahWordsMappingAxiosResp = await getAhWordsMapping([[${reportNo}]]);
+        if (!ahWordsMappingAxiosResp.data.success) {
             return;
         }
 
-        const ahWordsNameMapping = axiosResp.data.data;
+        // 哼哈词报告概览
+        let reportOverviewAxiosResp = await getAhCounterReportOverview([[${reportNo}]]);
+        if (!reportOverviewAxiosResp.data.success) {
+            return;
+        }
+
+        const ahWordsNameMapping = ahWordsMappingAxiosResp.data.data;
+        const reportOverview = reportOverviewAxiosResp.data.data;
+
         const usedWordAndCountChart = echarts.init(document.getElementById('used-word-and-count-chart'), 'dark');
         window.onresize = () => usedWordAndCountChart.resize();
 
@@ -127,10 +137,14 @@
         let data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
         const title = {
             text: '哼哈词使用次数',
-            subtext: '该图标会统计本次例会出现的哼哈词和对应的总使用次数'
+            subtext: '备注：该图标会统计本次例会出现的哼哈词和对应的总使用次数'
         };
         initClickableCharts(usedWordAndCountChart, title, dataAxis, data, 100);
     };
+
+    function initWordAndCountChart(usedWordAndCountChart, ahWordsNameMapping, reportOverview) {
+
+    }
 </script>
 </body>
 </html>

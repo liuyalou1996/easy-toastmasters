@@ -106,6 +106,7 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 		usedInfoPerGuestMapping.forEach((key, value) -> {
 			AhCounterDataDTO ahCounterDataDTO = new AhCounterDataDTO();
 			value.forEach(dataDTO -> {
+				ahCounterDataDTO.setId(dataDTO.getId());
 				ahCounterDataDTO.setRole(dataDTO.getRole());
 				ahCounterDataDTO.setName(dataDTO.getName());
 				ahCounterDataDTO.setWordOfEm(ahCounterDataDTO.getWordOfEm() + dataDTO.getWordOfEm());

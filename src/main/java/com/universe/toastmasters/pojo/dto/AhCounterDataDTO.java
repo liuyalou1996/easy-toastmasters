@@ -16,6 +16,11 @@ import lombok.NoArgsConstructor;
 public class AhCounterDataDTO {
 
 	/**
+	 * 唯一ID
+	 */
+	private long id;
+
+	/**
 	 * 角色名称
 	 */
 	private String role;

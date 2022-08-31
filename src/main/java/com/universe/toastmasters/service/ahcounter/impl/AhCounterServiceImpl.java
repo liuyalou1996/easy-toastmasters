@@ -117,11 +117,13 @@ public class AhCounterServiceImpl implements AhCounterService {
 			return AhCounterReportOverviewVO.builder().build();
 		}
 
+
 		return AhCounterReportOverviewVO.builder()
 			.id(ahCounterReportDO.getId())
 			.reportNo(String.valueOf(reportNo))
 			.ahCounter(ahCounterReportDO.getAhCounter())
 			.totalUsed(ahCounterReportDO.getTotalUsed())
+			.ahWordsNameMapping(FastJsonUtils.toStringValMap(ahCounterReportDO.getAhWordsNameMapping()))
 			.usedWordAndCount(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedWordAndCount()))
 			.usedGuestAndCount(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedGuestAndCount()))
 			.mostUsedWordTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getMostUsedWordTop3()))

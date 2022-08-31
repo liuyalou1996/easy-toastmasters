@@ -38,6 +38,11 @@ public class AhCounterReportOverviewVO {
 	private int totalUsed;
 
 	/**
+	 * 哼哈词中英文映射
+	 */
+	private Map<String, String> ahWordsNameMapping;
+
+	/**
 	 * 哼哈词及使用次数映射
 	 */
 	private Map<String, Integer> usedWordAndCount;
