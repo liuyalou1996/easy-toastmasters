@@ -72,14 +72,14 @@ public class AhCounterReportController {
 
 	@GetMapping("/page/overview/{reportNo}")
 	public ModelAndView turnToReportOverviewPage(@PathVariable long reportNo) {
-		ModelAndView modelAndView = new ModelAndView("report-overview");
+		ModelAndView modelAndView = new ModelAndView("ah-counter/html/report-overview");
 		modelAndView.addObject(reportNo);
 		return modelAndView;
 	}
 
 	@GetMapping("page/detail/{reportNo}")
 	public ModelAndView turnToReportDetailPage(@PathVariable long reportNo) {
-		ModelAndView modelAndView = new ModelAndView("report-overview");
+		ModelAndView modelAndView = new ModelAndView("ah-counter/html/report-overview");
 		modelAndView.addObject(reportNo);
 		return modelAndView;
 	}

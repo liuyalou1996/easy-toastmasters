@@ -24,6 +24,9 @@ spring:
   messages:
     basename: i18n.messages # basename也可以使用全限定类名
     encoding: UTF-8
+  web:
+    resources:
+      static-locations: classpath:/static/, classpath:/public/, classpath:/templates/
 # mybatis-plus configuration
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
