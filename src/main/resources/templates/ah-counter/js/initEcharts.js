@@ -122,6 +122,7 @@ function initPieChart(chart, title, data) {
                 },
                 label: {
                     show: true,
+                    color: '#b4ee5e',
                     formatter: '{b} : {c} 次'
                 },
             }
