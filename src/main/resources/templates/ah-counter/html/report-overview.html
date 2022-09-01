@@ -30,6 +30,14 @@
             background-color: rgb(27, 20, 72);
         }
 
+        .title-wrapper {
+            margin-top: 1%;
+            font-family: "Courier New";
+            font-weight: bold;
+            color: azure;
+            letter-spacing: 2px;
+        }
+
         .loading-wrapper {
             animation-name: rotateIn; /* referring directly to the animation's @keyframe declaration */
             animation-duration: 1s; /* don't forget to set a duration! */
@@ -53,6 +61,7 @@
                 width: 150px;
                 height: 150px;
                 margin-top: 10%;
+                margin-left: 10%;
             }
 
             .loading-wrapper {
@@ -70,9 +79,9 @@
         /*PC*/
         @media screen and (min-width: 960px) {
             .echarts-graph {
-                width: 700px;
+                width: 800px;
                 height: 500px;
-                margin-top: 2%;
+                margin-top: 1%;
                 margin-left: 1%;
             }
         }
@@ -87,17 +96,25 @@
                   fill="#ffffff" p-id="5073"></path>
         </svg>
     </div>
+    <div class="title-wrapper">
+        <div style="font-size: xx-large"><span>美好人生头马演讲俱乐部哼哈官汇报概览</span></div>
+        <div style="font-size: x-large;margin-top: 0.5%">哼哈官：<span style="color: greenyellow" class="ahCounterName"></span></div>
+        <div>哼哈词总使用次数：<span style="margin-top: 0.5%;color: yellow;font-size: xx-large" class="totalUsed"></span>次</div>
+    </div>
     <div class="graph-wrapper">
-        <div id="used-word-and-count-chart" class="echarts-graph">
+        <div id="usedWordAndCountChart" class="echarts-graph">
 
         </div>
-        <div class="echarts-graph">
+        <div id="usedGuestAndCountChart" class="echarts-graph">
 
         </div>
-        <div class="echarts-graph">
+        <div id="mostUsedWordTop3" class="echarts-graph">
 
         </div>
-        <div class="echarts-graph">
+        <div id="mostUsedGuestTop3" class="echarts-graph">
+
+        </div>
+        <div id="leastUsedGuestTop3" class="echarts-graph">
 
         </div>
         <div class="echarts-graph">
@@ -115,36 +132,123 @@
     });
 
     const initOverviewCharts = async () => {
-        // 哼哈词中英文映射
-        let ahWordsMappingAxiosResp = await getAhWordsMapping([[${reportNo}]]);
-        if (!ahWordsMappingAxiosResp.data.success) {
-            return;
-        }
-
         // 哼哈词报告概览
         let reportOverviewAxiosResp = await getAhCounterReportOverview([[${reportNo}]]);
         if (!reportOverviewAxiosResp.data.success) {
             return;
         }
 
-        const ahWordsNameMapping = ahWordsMappingAxiosResp.data.data;
         const reportOverview = reportOverviewAxiosResp.data.data;
 
-        const usedWordAndCountChart = echarts.init(document.getElementById('used-word-and-count-chart'), 'dark');
-        window.onresize = () => usedWordAndCountChart.resize();
+        // 初始化哼哈官名称
+        const {ahCounter} = reportOverview;
+        const {totalUsed} = reportOverview;
+        $('.ahCounterName').text(ahCounter);
+        $('.totalUsed').text(totalUsed);
 
-        let dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
-        let data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-        const title = {
-            text: '哼哈词使用次数',
-            subtext: '备注：该图标会统计本次例会出现的哼哈词和对应的总使用次数'
-        };
-        initClickableCharts(usedWordAndCountChart, title, dataAxis, data, 100);
+        initWordAndCountChart(reportOverview);
+        initGuestAndCountChart(reportOverview);
+        initMostUsedGuestTop3(reportOverview);
+        initLeastUsedGuestTop3(reportOverview);
+        initMostUsedWordTop3(reportOverview);
     };
 
-    function initWordAndCountChart(usedWordAndCountChart, ahWordsNameMapping, reportOverview) {
+    function initWordAndCountChart(reportOverview) {
+        const myChart = echarts.init(document.getElementById('usedWordAndCountChart'), 'dark');
+        window.onresize = () => myChart.resize();
+
+        const {ahWordsNameMapping, usedWordAndCount} = reportOverview;
+        let dataAxis = [];
+        let data = [];
+        Object.keys(usedWordAndCount).forEach(key => {
+            dataAxis.push(ahWordsNameMapping[key]);
+            data.push(usedWordAndCount[key]);
+        });
+
+        const title = {
+            text: '各个哼哈词使用次数',
+            subtext: '备注：该图表会展示出现的哼哈词和对应的总使用次数'
+        };
+        initClickableBarChart(myChart, title, dataAxis, data, 100);
+    }
+
+    function initGuestAndCountChart(reportOverview) {
+        const myChart = echarts.init(document.getElementById('usedGuestAndCountChart'), 'dark');
+        window.onresize = () => myChart.resize();
+
+        const {usedGuestAndCount} = reportOverview;
+        let dataAxis = [];
+        let data = [];
+        Object.keys(usedGuestAndCount).forEach(key => {
+            dataAxis.push(key);
+            data.push(usedGuestAndCount[key]);
+        });
+
+        const title = {
+            text: '嘉宾哼哈词使用次数',
+            subtext: '备注：该图表会展示所有上场嘉宾的哼哈词总使用次数'
+        };
+        initClickableBarChart(myChart, title, dataAxis, data, 100);
 
     }
+
+    function initMostUsedGuestTop3(reportOverview) {
+        const myChart = echarts.init(document.getElementById('mostUsedGuestTop3'), 'dark');
+        window.onresize = () => myChart.resize();
+
+        const {mostUsedGuestTop3} = reportOverview;
+        let data = [];
+        Object.keys(mostUsedGuestTop3).forEach(key => {
+            data.push({name: key, value: mostUsedGuestTop3[key]});
+        });
+
+        const title = {
+            text: '哼哈词使用次数最多嘉宾前3',
+            subtext: '备注：该图表会展示哼哈词使用次数最多的嘉宾前3名，这些嘉宾要多多注意下哦',
+            left: 'left'
+        };
+
+        initPieChart(myChart, title, data);
+    }
+
+    function initLeastUsedGuestTop3(reportOverview) {
+        const myChart = echarts.init(document.getElementById('leastUsedGuestTop3'), 'dark');
+        window.onresize = () => myChart.resize();
+
+        const {leastUsedGuestTop3} = reportOverview;
+        let data = [];
+        Object.keys(leastUsedGuestTop3).forEach(key => {
+            data.push({name: key, value: leastUsedGuestTop3[key]});
+        });
+
+        const title = {
+            text: '哼哈词使用次数最少嘉宾前3',
+            subtext: '备注：该图表会展示哼哈词使用次数最少的嘉宾前3名，多多像ta们学习哦',
+            left: 'left'
+        };
+
+        initPieChart(myChart, title, data);
+    }
+
+    function initMostUsedWordTop3(reportOverview) {
+        const myChart = echarts.init(document.getElementById('mostUsedWordTop3'), 'dark');
+        window.onresize = () => myChart.resize();
+
+        const {ahWordsNameMapping, mostUsedWordTop3} = reportOverview;
+        let data = [];
+        Object.keys(mostUsedWordTop3).forEach(key => {
+            data.push({name: ahWordsNameMapping[key], value: mostUsedWordTop3[key]});
+        });
+
+        const title = {
+            text: '哼哈词使用最频繁前3',
+            subtext: '备注：该图表会展示使用次数最多的哼哈词前3，大家要多多注意哦',
+            left: 'left'
+        };
+
+        initPieChart(myChart, title, data);
+    }
+
 </script>
 </body>
 </html>

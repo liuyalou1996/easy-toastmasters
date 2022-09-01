@@ -29,11 +29,6 @@ function post(url, data, callbackOnSuccess) {
 }
 
 
-function getAhWordsMapping(reportNo) {
-    let url = `/ah-counter/report/ah-words-mapping/${reportNo}`;
-    return axios.get(url, {params: null})
-}
-
 function getAhCounterReportOverview(reportNo, callback) {
     let url = `/ah-counter/report/overview/${reportNo}`;
     return axios.get(url, {params: null})

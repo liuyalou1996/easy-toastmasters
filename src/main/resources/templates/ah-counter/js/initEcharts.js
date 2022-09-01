@@ -6,17 +6,23 @@
  * @param data 横坐标数据
  * @param yMax 纵坐标最大值
  */
-function initClickableCharts(chart, title, dataAxis, data, yMax) {
+function initClickableBarChart(chart, title, dataAxis, data, yMax) {
     let dataShadow = [];
     for (let i = 0; i < data.length; i++) {
         dataShadow.push(yMax);
     }
     const options = {
         title: title,
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
         xAxis: {
             data: dataAxis,
             axisLabel: {
-                inside: true,
+                inside: false,
                 color: '#fff'
             },
             axisTick: {
@@ -47,6 +53,11 @@ function initClickableCharts(chart, title, dataAxis, data, yMax) {
             {
                 type: 'bar',
                 showBackground: true,
+                label: {
+                    show: true,
+                    position: 'top',
+                    color: '#e7dbdb'
+                },
                 itemStyle: {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                         {offset: 0, color: '#83bff6'},
@@ -63,7 +74,7 @@ function initClickableCharts(chart, title, dataAxis, data, yMax) {
                         ])
                     }
                 },
-                data: data
+                data: data,
             }
         ]
     };
@@ -78,4 +89,43 @@ function initClickableCharts(chart, title, dataAxis, data, yMax) {
         });
     });
     chart.setOption(options);
+}
+
+/**
+ * 初始化饼状图
+ * @param chart Echart对象
+ * @param title 标题信息
+ * @param data 实际数据格式
+ */
+function initPieChart(chart, title, data) {
+    const option = {
+        title: title,
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'right'
+        },
+        series: [
+            {
+                name: '哼哈词使用排名前3',
+                type: 'pie',
+                radius: '50%',
+                data: data,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+                label: {
+                    show: true,
+                    formatter: '{b} : {c} 次'
+                },
+            }
+        ]
+    };
+    chart.setOption(option);
 }
