@@ -112,7 +112,6 @@
 <script th:inline="javascript">
     $(function () {
         // 去掉加载中标识
-        window.setTimeout(() => $('.loading-wrapper').css('display', 'none'), 1000);
         window.setTimeout(() => initDetailCharts(), 1000);
     });
 
@@ -122,6 +121,9 @@
         if (!reportOverviewAxiosResp.data.success) {
             return;
         }
+
+        // 关闭显示进度条
+        $('.loading-wrapper').css('display', 'none');
 
         const reportOverview = reportOverviewAxiosResp.data.data;
         const {ahCounter} = reportOverview;
