@@ -86,7 +86,7 @@ public class AhCounterReportController {
 
 	@GetMapping("page/detail/{reportNo}")
 	public ModelAndView turnToReportDetailPage(@PathVariable String reportNo) {
-		ModelAndView modelAndView = new ModelAndView("ah-counter/html/report-overview");
+		ModelAndView modelAndView = new ModelAndView("ah-counter/html/report-detail");
 		modelAndView.addObject(reportNo);
 		return modelAndView;
 	}

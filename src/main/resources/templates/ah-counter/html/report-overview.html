@@ -9,8 +9,8 @@
     <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/layui@2.7.6/dist/layui.js"></script>
     <script type="text/javascript" src="../../common/js/echarts.min.js" th:src="@{/common/js/echarts.min.js}"></script>
-    <script type="text/javascript" src="../js/request.js" th:src="@{/ah-counter/js/request.js}" th:inline="javascript"></script>
-    <script type="text/javascript" src="../js/initEcharts.js" th:src="@{/ah-counter/js/initEcharts.js}" th:inline="javascript"></script>
+    <script type="text/javascript" src="../js/request.js" th:src="@{/ah-counter/js/request.js}"></script>
+    <script type="text/javascript" src="../js/initEcharts.js" th:src="@{/ah-counter/js/initEcharts.js}"></script>
     <title>哼哈官汇报概览</title>
 
     <style>
@@ -99,7 +99,10 @@
     <div class="title-wrapper">
         <div style="font-size: xx-large"><span>美好人生头马演讲俱乐部哼哈官汇报概览</span></div>
         <div style="font-size: x-large;margin-top: 0.5%">哼哈官：<span style="color: greenyellow" class="ahCounterName"></span></div>
-        <div>哼哈词总使用次数：<span style="margin-top: 0.5%;color: yellow;font-size: xx-large" class="totalUsed"></span>次</div>
+        <div>
+            哼哈词总使用次数：<span style="margin-top: 0.5%;color: yellow;font-size: xx-large" class="totalUsed"></span>次
+            (<a target="_blank" style="color: #5deee9" th:href="@{/ah-counter/report/page/detail/{reportNo}(reportNo=${reportNo})}">点击查看详情</a>)
+        </div>
     </div>
     <div class="graph-wrapper">
         <div id="usedWordAndCountChart" class="echarts-graph">

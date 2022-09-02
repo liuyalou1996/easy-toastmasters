@@ -45,7 +45,7 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 
 		// 哼哈词及使用次数映射
 		Map<String, Integer> usedWordAndCount = Arrays.stream(AhCounterDataDTO.class.getDeclaredFields())
-			.filter(field -> !Arrays.asList("role", "name").contains(field.getName()))
+			.filter(field -> !Arrays.asList("id", "role", "name").contains(field.getName()))
 			.peek(field -> field.setAccessible(true))
 			.collect(
 				Collectors.toMap(field -> field.getName(), field -> dataDTOList.stream()

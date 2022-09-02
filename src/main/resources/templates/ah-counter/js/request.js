@@ -29,12 +29,12 @@ function post(url, data, callbackOnSuccess) {
 }
 
 
-function getAhCounterReportOverview(reportNo, callback) {
+function getAhCounterReportOverview(reportNo) {
     let url = `/ah-counter/report/overview/${reportNo}`;
     return axios.get(url, {params: null})
 }
 
-function getAhCounterReportDetail(reportNo, callback) {
+function getAhCounterReportDetail(reportNo) {
     let url = `/ah-counter/report/detail/${reportNo}`;
     return axios.get(url, {params: null})
 }

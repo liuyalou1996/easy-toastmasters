@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="false" scanPeriod="5 minutes" debug="false">
-    <springProfile name="dev">
-        <property name="basePath" value="logs"/>
-    </springProfile>
-    <springProfile name="prod">
-        <property name="basePath" value="/opt/appl/easy-toastmasters/logs"/>
-    </springProfile>
+    <property name="basePath" value="logs"/>
     <property name="appLogPath" value="${basePath}/app"/>
     <property name="druidLogPath" value="${basePath}/druid"/>
     <property name="errorLogPath" value="${basePath}/error"/>
