@@ -53,20 +53,21 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 					.sum())
 			);
 
-		// 使用频率最高哼哈词前3
-		Map<String, Integer>  mostUsedWordTop3 = usedWordAndCount.entrySet().stream()
+		// 使用频率最高哼哈词前5
+		Map<String, Integer>  mostUsedWordTop5 = usedWordAndCount.entrySet().stream()
 			.sorted(Entry.<String, Integer>comparingByValue().reversed())
-			.limit(3)
+			.limit(5)
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
 		// 哼哈词使用名字和总次数
 		Map<String, Integer> usedGuestAndCount = dataDTOList.stream()
 			.collect(Collectors.groupingBy(AhCounterDataDTO::getName, Collectors.summingInt(AhCounterDataDTO::getAhWordsUsedCount)));
 
-		// 哼哈词使用次数最多前3的名字和使用次数
-		Map<String, Integer> mostUsedGuestTop3 = usedGuestAndCount.entrySet().stream()
+		// 哼哈词使用次数最多前5的名字和使用次数
+		Map<String, Integer> mostUsedGuestTop5 = usedGuestAndCount.entrySet().stream()
 			.sorted(Entry.<String,Integer>comparingByValue().reversed())
-			.limit(3).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+			.limit(5)
+			.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
 		// 哼哈词使用次数最少前3的名字和使用次数
 		Map<String, Integer> leastUsedGuestTop3 = usedGuestAndCount.entrySet().stream()
@@ -84,9 +85,9 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 			.totalUsed(totalUsed)
 			.usedInfoPerGuest(FastJsonUtils.toJsonString(usedInfoPerGuest))
 			.usedWordAndCount(FastJsonUtils.toJsonString(usedWordAndCount))
-			.mostUsedWordTop3(FastJsonUtils.toJsonString(mostUsedWordTop3))
+			.mostUsedWordTop5(FastJsonUtils.toJsonString(mostUsedWordTop5))
 			.usedGuestAndCount(FastJsonUtils.toJsonString(usedGuestAndCount))
-			.mostUsedGuestTop3(FastJsonUtils.toJsonString(mostUsedGuestTop3))
+			.mostUsedGuestTop5(FastJsonUtils.toJsonString(mostUsedGuestTop5))
 			.leastUsedGuestTop3(FastJsonUtils.toJsonString(leastUsedGuestTop3))
 			.build();
 		ahCounterReportMapper.insert(ahCounterReportDO);

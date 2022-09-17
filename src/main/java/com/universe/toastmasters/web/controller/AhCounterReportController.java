@@ -54,9 +54,10 @@ public class AhCounterReportController {
 
 	@ResponseBody
 	@PostMapping("/upload")
-	public ApiResponse<Long> resolveAhCounterReport(MultipartFile file) throws IOException {
+	public ApiResponse<String> resolveAhCounterReport(MultipartFile file) throws IOException {
 		AhCounterReportDTO ahCounterReportDTO = ahCounterService.resolveAhCounterReport(file.getInputStream());
-		return ApiResponse.success(ahCounterService.saveAhCounterReport(ahCounterReportDTO));
+		long reportNo = ahCounterService.saveAhCounterReport(ahCounterReportDTO);
+		return ApiResponse.success(String.valueOf(reportNo));
 	}
 
 	@ResponseBody

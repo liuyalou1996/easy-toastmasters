@@ -48,9 +48,9 @@ public class AhCounterReportOverviewVO {
 	private Map<String, Integer> usedWordAndCount;
 
 	/**
-	 * 哼哈词使用频率最高前3
+	 * 哼哈词使用频率最高前5
 	 */
-	private Map<String, Integer> mostUsedWordTop3;
+	private Map<String, Integer> mostUsedWordTop5;
 
 	/**
 	 * 哼哈词使用嘉宾和次数
@@ -60,7 +60,7 @@ public class AhCounterReportOverviewVO {
 	/**
 	 * 哼哈词使用次数最多嘉宾前3
 	 */
-	private Map<String, Integer> mostUsedGuestTop3;
+	private Map<String, Integer> mostUsedGuestTop5;
 
 	/**
 	 * 哼哈词使用次数最少嘉宾前3

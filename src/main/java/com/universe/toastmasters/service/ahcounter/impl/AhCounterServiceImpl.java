@@ -117,7 +117,6 @@ public class AhCounterServiceImpl implements AhCounterService {
 			return AhCounterReportOverviewVO.builder().build();
 		}
 
-
 		return AhCounterReportOverviewVO.builder()
 			.id(ahCounterReportDO.getId())
 			.reportNo(String.valueOf(reportNo))
@@ -126,8 +125,8 @@ public class AhCounterServiceImpl implements AhCounterService {
 			.ahWordsNameMapping(FastJsonUtils.toStringValMap(ahCounterReportDO.getAhWordsNameMapping()))
 			.usedWordAndCount(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedWordAndCount()))
 			.usedGuestAndCount(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getUsedGuestAndCount()))
-			.mostUsedWordTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getMostUsedWordTop3()))
-			.mostUsedGuestTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getMostUsedGuestTop3()))
+			.mostUsedWordTop5(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getMostUsedWordTop5()))
+			.mostUsedGuestTop5(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getMostUsedGuestTop5()))
 			.leastUsedGuestTop3(FastJsonUtils.toIntegerValMap(ahCounterReportDO.getLeastUsedGuestTop3()))
 			.build();
 	}
