@@ -5,7 +5,7 @@ import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportDetailVO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportOverviewVO;
 import com.universe.toastmasters.service.ahcounter.AhCounterService;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -43,7 +43,7 @@ public class AhCounterReportController {
 	@GetMapping("/template")
 	public ResponseEntity<byte[]> downloadAhCounterReportTemplate() throws IOException {
 		Resource template = new ClassPathResource(String.format("excel/%s", FILE_NAME));
-		byte[] body = FileUtils.readFileToByteArray(template.getFile());
+		byte[] body = IOUtils.toByteArray(template.getInputStream());
 
 		HttpHeaders respHeaders = new HttpHeaders();
 		respHeaders.setContentDisposition(ContentDisposition.attachment().filename(FILE_NAME, StandardCharsets.UTF_8).build());
@@ -59,6 +59,7 @@ public class AhCounterReportController {
 		long reportNo = ahCounterService.saveAhCounterReport(ahCounterReportDTO);
 		return ApiResponse.success(String.valueOf(reportNo));
 	}
+
 
 	@ResponseBody
 	@GetMapping("/ah-words-mapping/{reportNo}")
