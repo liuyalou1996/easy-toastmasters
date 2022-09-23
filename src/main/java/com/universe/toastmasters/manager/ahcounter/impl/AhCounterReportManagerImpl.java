@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class AhCounterReportManagerImpl implements AhCounterReportManager {
 			.filter(field -> !Arrays.asList("id", "role", "name").contains(field.getName()))
 			.peek(field -> field.setAccessible(true))
 			.collect(
-				Collectors.toMap(field -> field.getName(), field -> dataDTOList.stream()
+				Collectors.toMap(Field::getName, field -> dataDTOList.stream()
 					.flatMapToInt(ahCounterDataDTO -> IntStream.of((int) ReflectionUtils.getField(field, ahCounterDataDTO)))
 					.sum())
 			);
