@@ -8,8 +8,11 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
@@ -45,13 +48,23 @@ public abstract class QrCodeUtils {
 	 * @return 图片二进制流
 	 * @throws Exception
 	 */
-	public static byte[] generateGreenQrCode(String content, int width, int height) throws Exception {
-		return generateQrCode(content, width, height, Color.GREEN.getRGB(), Color.WHITE.getRGB());
+	public static byte[] generateGreenQrCodeAsByteArray(String content, int width, int height) throws Exception {
+		return generateQrCodeAsByteArray(content, width, height, Color.GREEN.getRGB(), Color.WHITE.getRGB());
 	}
 
-	public static byte[] generateQrCode(String content, int width, int height, int onColorAsRGB, int offColorAsRGB) throws Exception {
+	/**
+	 * 生成二维码并转为二进制流
+	 * @param content 二维码展示内容
+	 * @param width 二维码图片宽度
+	 * @param height 二维码图片高度
+	 * @param onColorAsRGB 二维码数据图案颜色
+	 * @param offColorAsRGB 二维码背景色
+	 * @return 图片二进制流
+	 * @throws Exception
+	 */
+	public static byte[] generateQrCodeAsByteArray(String content, int width, int height, int onColorAsRGB, int offColorAsRGB) throws Exception {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		generateQrCode(baos, content, width, height, onColorAsRGB, offColorAsRGB);
+		generateQrCodeAsByteArray(baos, content, width, height, onColorAsRGB, offColorAsRGB);
 		return baos.toByteArray();
 	}
 
@@ -65,7 +78,7 @@ public abstract class QrCodeUtils {
 	 * @param offColorAsRGB 二维码背景色
 	 * @throws Exception
 	 */
-	public static void generateQrCode(OutputStream os, String content, int width, int height, int onColorAsRGB, int offColorAsRGB) throws Exception {
+	public static void generateQrCodeAsByteArray(OutputStream os, String content, int width, int height, int onColorAsRGB, int offColorAsRGB) throws Exception {
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, DEFAULT_HINTS);
 		MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig(onColorAsRGB, offColorAsRGB);
@@ -82,19 +95,52 @@ public abstract class QrCodeUtils {
 	 * @param offColorAsRGB 二维码背景色
 	 * @throws Exception
 	 */
-	public static void generateQrCode(String path, String content, int width, int height, int onColorAsRGB, int offColorAsRGB) throws Exception {
+	public static void generateQrCodeAsByteArray(String path, String content, int width, int height, int onColorAsRGB, int offColorAsRGB) throws Exception {
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, DEFAULT_HINTS);
 		MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig(onColorAsRGB, offColorAsRGB);
 		MatrixToImageWriter.writeToPath(bitMatrix, DEFAULT_FORMAT, Paths.get(path), matrixToImageConfig);
 	}
 
-	public static void main(String[] args) throws Exception {
-		String path = "C:\\Users\\mc\\Desktop\\qrcode.png";
-		String content = "https://lingbomanbu.com/ah-counter/report/overview/769256790536441856";
-		int width = 300;
-		int height = 300;
-		generateQrCode(path, content, width, height, Color.GREEN.getRGB(), Color.WHITE.getRGB());
+	public static byte[] attachLogoInTheMiddle(InputStream qrCodeIs, InputStream logoIs) throws Exception {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		attachLogoInTheMiddle(qrCodeIs, logoIs, baos);
+		return baos.toByteArray();
+	}
+
+	/**
+	 * 二维码中间插入logo
+	 * @param qrCodeIs 二维码输入流
+	 * @param logoIs logo输入流
+	 * @param dest 输出路径
+	 * @throws Exception
+	 */
+	public static void attachLogoInTheMiddle(InputStream qrCodeIs, InputStream logoIs, OutputStream dest) throws Exception {
+		BufferedImage qrCodeImage = ImageIO.read(qrCodeIs);
+		BufferedImage logoImage = ImageIO.read(logoIs);
+
+		Graphics2D graphics2D = qrCodeImage.createGraphics();
+		// 这里将logo的位置居中
+		int logoX = (qrCodeImage.getWidth() - logoImage.getWidth()) / 2;
+		int logoY = (qrCodeImage.getHeight() - logoImage.getHeight()) / 2;
+		graphics2D.drawImage(logoImage, null, logoX, logoY);
+		graphics2D.dispose();
+
+		ImageIO.write(qrCodeImage, DEFAULT_FORMAT, dest);
+	}
+
+	/**
+	 * 重置图片大小
+	 * @param rawImage 原图片
+	 * @param targetWidth 目标图片宽度
+	 * @param targetHeight 目标图片高度
+	 * @return
+	 */
+	public static BufferedImage resizeImage(BufferedImage rawImage, int targetWidth, int targetHeight) {
+		Image scaledImage = rawImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_AREA_AVERAGING);
+		BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+		resizedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
+		return resizedImage;
 	}
 
 }

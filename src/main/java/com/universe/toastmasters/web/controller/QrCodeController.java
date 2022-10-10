@@ -2,6 +2,8 @@ package com.universe.toastmasters.web.controller;
 
 import com.universe.toastmasters.pojo.dto.QrCodeGenerationDTO;
 import com.universe.toastmasters.util.QrCodeUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.ByteArrayInputStream;
 
 /**
  * @author 刘亚楼
@@ -23,11 +27,15 @@ public class QrCodeController {
 		int width = qrCodeGenerationDTO.getWidth();
 		int height = qrCodeGenerationDTO.getHeight();
 		String content = qrCodeGenerationDTO.getContent();
-		byte[] data = QrCodeUtils.generateGreenQrCode(content, width, height);
+		byte[] qrCodeData = QrCodeUtils.generateGreenQrCodeAsByteArray(content, width, height);
+
+		ByteArrayInputStream bais = new ByteArrayInputStream(qrCodeData);
+		Resource logoResource = new ClassPathResource("templates/images/toastmasters_logo.png");
+		byte[] respData = QrCodeUtils.attachLogoInTheMiddle(bais, logoResource.getInputStream());
 
 		HttpHeaders respHeaders = new HttpHeaders();
 		respHeaders.setContentType(MediaType.IMAGE_PNG);
-		return new ResponseEntity<>(data, respHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<>(respData, respHeaders, HttpStatus.CREATED);
 	}
 
 }
