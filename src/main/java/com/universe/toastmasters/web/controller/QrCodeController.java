@@ -30,7 +30,7 @@ public class QrCodeController {
 		byte[] qrCodeData = QrCodeUtils.generateGreenQrCodeAsByteArray(content, width, height);
 
 		ByteArrayInputStream bais = new ByteArrayInputStream(qrCodeData);
-		Resource logoResource = new ClassPathResource("templates/images/toastmasters_logo.png");
+		Resource logoResource = new ClassPathResource("templates/images/wonderful_life.jpg");
 		byte[] respData = QrCodeUtils.attachLogoInTheMiddle(bais, logoResource.getInputStream());
 
 		HttpHeaders respHeaders = new HttpHeaders();
