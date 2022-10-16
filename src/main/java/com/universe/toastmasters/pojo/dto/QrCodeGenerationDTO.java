@@ -23,4 +23,9 @@ public class QrCodeGenerationDTO {
 	 * 二维码图片高度
 	 */
 	private int height;
+
+	/**
+	 * 二维码图片Logo的大小：L-large,M-middle,S-small
+	 */
+	private String logoSize;
 }

@@ -1,5 +1,6 @@
 package com.universe.toastmasters.web.controller;
 
+import com.universe.toastmasters.constant.enumeration.LogoSizeEnum;
 import com.universe.toastmasters.pojo.dto.QrCodeGenerationDTO;
 import com.universe.toastmasters.util.QrCodeUtils;
 import org.springframework.core.io.ClassPathResource;
@@ -27,10 +28,11 @@ public class QrCodeController {
 		int width = qrCodeGenerationDTO.getWidth();
 		int height = qrCodeGenerationDTO.getHeight();
 		String content = qrCodeGenerationDTO.getContent();
+		String logoName = LogoSizeEnum.fromLogoSize(qrCodeGenerationDTO.getLogoSize()).getLogoName();
 		byte[] qrCodeData = QrCodeUtils.generateGreenQrCodeAsByteArray(content, width, height);
 
 		ByteArrayInputStream bais = new ByteArrayInputStream(qrCodeData);
-		Resource logoResource = new ClassPathResource("templates/images/wonderful_life.jpg");
+		Resource logoResource = new ClassPathResource("templates/images/".concat(logoName));
 		byte[] respData = QrCodeUtils.attachLogoInTheMiddle(bais, logoResource.getInputStream());
 
 		HttpHeaders respHeaders = new HttpHeaders();
