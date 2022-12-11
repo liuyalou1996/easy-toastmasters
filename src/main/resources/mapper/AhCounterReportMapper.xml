@@ -12,9 +12,7 @@
         <result column="total_used" property="totalUsed"/>
         <result column="used_info_per_guest" property="usedInfoPerGuest"/>
         <result column="used_word_and_count" property="usedWordAndCount"/>
-        <result column="most_used_word_top3" property="mostUsedWordTop3"/>
         <result column="used_guest_and_count" property="usedGuestAndCount"/>
-        <result column="most_used_guest_top3" property="mostUsedGuestTop3"/>
         <result column="least_used_guest_top3" property="leastUsedGuestTop3"/>
         <result column="create_time" property="createTime"/>
     </resultMap>

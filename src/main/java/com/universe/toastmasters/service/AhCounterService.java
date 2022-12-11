@@ -1,4 +1,4 @@
-package com.universe.toastmasters.service.ahcounter;
+package com.universe.toastmasters.service;
 
 import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportDetailVO;

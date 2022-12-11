@@ -4,7 +4,7 @@ import com.universe.toastmasters.pojo.ApiResponse;
 import com.universe.toastmasters.pojo.dto.AhCounterReportDTO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportDetailVO;
 import com.universe.toastmasters.pojo.vo.AhCounterReportOverviewVO;
-import com.universe.toastmasters.service.ahcounter.AhCounterService;
+import com.universe.toastmasters.service.AhCounterService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;

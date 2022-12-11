@@ -1,9 +1,9 @@
-package com.universe.toastmasters.manager.ahcounter.impl;
+package com.universe.toastmasters.manager.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.universe.toastmasters.constant.CommonConst;
-import com.universe.toastmasters.manager.ahcounter.AhCounterReportManager;
+import com.universe.toastmasters.manager.AhCounterReportManager;
 import com.universe.toastmasters.mapper.AhCounterReportMapper;
 import com.universe.toastmasters.pojo.domain.AhCounterReportDO;
 import com.universe.toastmasters.pojo.dto.AhCounterDataDTO;

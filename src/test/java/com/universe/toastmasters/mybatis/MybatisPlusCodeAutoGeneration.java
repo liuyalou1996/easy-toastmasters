@@ -29,9 +29,10 @@ public class MybatisPlusCodeAutoGeneration {
 			// parent指定生成的代码在哪个包下，entity可以指定实体(DO)所在的包名
 			.packageConfig(builder -> builder.parent("com.universe.toastmasters").entity("pojo.domain"))
 			// addInclude指定包含的表名，不调用该方法默认为所有表生成代码；addTablePrefix可以过滤表前缀，即t_user变成user
-			.strategyConfig(builder -> builder.addTablePrefix("t_").addInclude("t_ah_counter_report")
+			.strategyConfig(builder -> builder.addTablePrefix("t_").addInclude("t_short_link")
 				// 禁用为实体类生成序列化ID；formatFileName格式化生成的实体类名称，即t_user -> UserDO
 				.entityBuilder().disableSerialVersionUID()
+												.enableLombok()
 												.formatFileName("%sDO")
 				// formatMapperFileName格式化Mapper接口名称，即t_user -> UserMapper
 				// formatXmlFileName格式化Mapper.xml文件名称，即t_user -> UserMapper.xml
