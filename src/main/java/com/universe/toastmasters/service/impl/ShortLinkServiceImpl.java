@@ -44,11 +44,13 @@ public class ShortLinkServiceImpl implements ShortLinkService {
 	public String generateShortLink(String longLink) {
 		return null;
 	}
-
 	public static void main(String[] args) {
 		long uniqueId = SnowFlakeUtils.nextId();
-		System.out.println(String.valueOf(uniqueId).length());
-		System.out.println(encodeToBase62String(uniqueId));
-		System.out.println(Hashing.murmur3_128().hashString("123", StandardCharsets.UTF_8).toString().length());
+		long uniqueIdHashValue = Hashing.murmur3_32_fixed().hashLong(uniqueId).padToLong();
+		long urlHashValue = Hashing.murmur3_32_fixed().hashString("https://www.baidu.com", StandardCharsets.UTF_8).padToLong();
+		System.out.println(uniqueId);
+		System.out.println(uniqueIdHashValue);
+		System.out.println(urlHashValue);
+		System.out.println(encodeToBase62String(urlHashValue));
 	}
 }
