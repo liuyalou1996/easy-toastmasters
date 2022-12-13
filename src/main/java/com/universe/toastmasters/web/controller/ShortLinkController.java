@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 public class ShortLinkController {
 
+
 	@GetMapping("/redirect")
 	public RedirectView redirect() {
 		RedirectView redirectView = new RedirectView();

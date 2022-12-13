@@ -29,7 +29,6 @@ public class ShortLinkServiceImpl implements ShortLinkService {
 		if (StringUtils.isNotBlank(shortLink)) {
 			return shortLink;
 		}
-
 		// 如果Hash冲突则加随机盐重新Hash
 		return regenerateOnHashConflict(longLink, longLinkHash);
 	}
