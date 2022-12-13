@@ -6,7 +6,9 @@ package com.universe.toastmasters.manager;
  */
 public interface ShortLinkManager {
 
-	void saveShortLink(String shortLink, String hash, String longLink);
+	void saveShortLink(String shortLink, long longLinkHash, String longLink);
 
-	String getShortLink(String hash, String longLink);
+	String getShortLink(long longLinkHash, String longLink);
+
+	boolean isShortLinkRepeated(String shortLink);
 }

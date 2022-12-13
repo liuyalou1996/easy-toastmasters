@@ -16,16 +16,35 @@ public abstract class Base62Utils {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 	};
 
+	private static final String BASE_62_CHARACTERS = String.valueOf(BASE_62_ARRAY);
+
+	/**
+	 * 将long类型编码成Base62字符串
+	 * @param num
+	 * @return
+	 */
 	public static String encodeToBase62String(long num) {
 		StringBuilder sb = new StringBuilder();
-		int remainder = 0;
 		while (num > 0) {
-			remainder = (int) (num % SCALE);
-			sb.append(BASE_62_ARRAY[remainder]);
+			sb.insert(0, BASE_62_ARRAY[(int) (num % SCALE)]);
 			num /= SCALE;
 		}
-		sb.append(BASE_62_ARRAY[(int) num]);
-		return sb.reverse().toString();
+		return sb.toString();
+	}
+
+	/**
+	 * 将Base62字符串解码成long类型
+	 * @param base62Str
+	 * @return
+	 */
+	public static long decodeToLong(String base62Str) {
+		long num = 0, coefficient = 1;
+		String reversedBase62Str = new StringBuilder(base62Str).reverse().toString();
+		for (char base62Character : reversedBase62Str.toCharArray()) {
+			num += BASE_62_CHARACTERS.indexOf(base62Character) * coefficient;
+			coefficient *= SCALE;
+		}
+		return num;
 	}
 
 }

@@ -18,3 +18,18 @@ create table t_ah_counter_report
 
 create index idx_accounter_report_create_time on t_ah_counter_report (create_time);
 create index idx_accounter_report_no on t_ah_counter_report (report_no);
+
+# 短链信息表
+create table `t_short_link`
+(
+    `id`             bigint primary key auto_increment comment '主键ID',
+    `short_link`     varchar(32)  not null default '' comment '短链接',
+    `long_link_hash` bigint       not null default 0 comment 'hash值',
+    `long_link`      varchar(128) not null default '' comment '长链接',
+    `status`         tinyint      not null default 1 comment '状态：1-可用，0-不可用',
+    `expiry_time`    datetime     null comment '过期时间',
+    `create_time`    datetime     not null default current_timestamp comment '创建时间'
+) comment ='短链信息表';
+create index idx_sl_hash_long_link on t_short_link (long_link_hash, long_link);
+create index idx_sl_short_link on t_short_link (short_link);
+

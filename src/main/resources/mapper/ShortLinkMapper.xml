@@ -6,14 +6,16 @@
     <resultMap id="BaseResultMap" type="com.universe.toastmasters.pojo.domain.ShortLinkDO">
         <id column="id" property="id" />
         <result column="short_link" property="shortLink" />
-        <result column="hash" property="hash" />
+        <result column="long_link_hash" property="longLinkHash" />
         <result column="long_link" property="longLink" />
+        <result column="status" property="status" />
+        <result column="expiry_time" property="expiryTime" />
         <result column="create_time" property="createTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, short_link, hash, long_link, create_time
+        id, short_link, long_link_hash, long_link, status, expiry_time, create_time
     </sql>
 
 </mapper>

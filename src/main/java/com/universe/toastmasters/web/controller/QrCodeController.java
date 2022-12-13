@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.ByteArrayInputStream;
 
@@ -39,14 +38,6 @@ public class QrCodeController {
 		HttpHeaders respHeaders = new HttpHeaders();
 		respHeaders.setContentType(MediaType.IMAGE_PNG);
 		return new ResponseEntity<>(respData, respHeaders, HttpStatus.CREATED);
-	}
-
-	@GetMapping("/redirect")
-	public RedirectView redirect() {
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl("https://www.baidu.com/");
-		redirectView.setStatusCode(HttpStatus.FOUND);
-		return redirectView;
 	}
 
 }

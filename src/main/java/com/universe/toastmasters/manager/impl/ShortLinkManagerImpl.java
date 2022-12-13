@@ -21,25 +21,30 @@ public class ShortLinkManagerImpl implements ShortLinkManager {
 	@Autowired
 	private ShortLinkMapper shortLinkMapper;
 
-
 	@Override
-	public void saveShortLink(String shortLink, String hash, String longLink) {
+	public void saveShortLink(String shortLink, long longLinkHash, String longLink) {
 		ShortLinkDO shortLinkDO = ShortLinkDO.builder()
 			.shortLink(shortLink)
-			.hash(hash)
+			.longLinkHash(longLinkHash)
 			.longLink(longLink)
 			.build();
 		shortLinkMapper.insert(shortLinkDO);
 	}
 
 	@Override
-	public String getShortLink(String hash, String longLink) {
+	public String getShortLink(long longLinkHash, String longLink) {
 		Wrapper<ShortLinkDO> wrapper = Wrappers.lambdaQuery(ShortLinkDO.class)
 			.select(ShortLinkDO::getShortLink)
-			.eq(ShortLinkDO::getHash, hash)
+			.eq(ShortLinkDO::getLongLinkHash, longLinkHash)
 			.eq(ShortLinkDO::getLongLink, longLink)
 			.last(CommonConst.LIMIT_SQL);
 		ShortLinkDO shortLinkDO = shortLinkMapper.selectOne(wrapper);
 		return Optional.ofNullable(shortLinkDO).map(ShortLinkDO::getShortLink).orElse(null);
+	}
+
+	@Override
+	public boolean isShortLinkRepeated(String shortLink) {
+		Wrapper<ShortLinkDO> wrapper = Wrappers.lambdaQuery(ShortLinkDO.class).eq(ShortLinkDO::getShortLink, shortLink);
+		return shortLinkMapper.selectCount(wrapper) > 0;
 	}
 }

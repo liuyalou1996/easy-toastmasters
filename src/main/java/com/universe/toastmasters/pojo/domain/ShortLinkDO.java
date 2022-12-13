@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author Nick Liu
- * @since 2022-12-11
+ * @since 2022-12-13
  */
 @Data
 @Builder
@@ -39,7 +39,7 @@ public class ShortLinkDO {
 	/**
 	 * hash值
 	 */
-	private String hash;
+	private Long longLinkHash;
 
 	/**
 	 * 长链接
@@ -47,52 +47,18 @@ public class ShortLinkDO {
 	private String longLink;
 
 	/**
+	 * 状态：1-可用，0-不可用
+	 */
+	private Integer status;
+
+	/**
+	 * 过期时间
+	 */
+	private LocalDateTime expiryTime;
+
+	/**
 	 * 创建时间
 	 */
 	private LocalDateTime createTime;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getShortLink() {
-		return shortLink;
-	}
-
-	public void setShortLink(String shortLink) {
-		this.shortLink = shortLink;
-	}
-
-	public String getHash() {
-		return hash;
-	}
-
-	public void setHash(String hash) {
-		this.hash = hash;
-	}
-
-	public String getLongLink() {
-		return longLink;
-	}
-
-	public void setLongLink(String longLink) {
-		this.longLink = longLink;
-	}
-
-	public LocalDateTime getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(LocalDateTime createTime) {
-		this.createTime = createTime;
-	}
-
-	@Override
-	public String toString() {
-		return "ShortLinkDO{" + "id=" + id + ", shortLink=" + shortLink + ", hash=" + hash + ", longLink=" + longLink + ", createTime=" + createTime + "}";
-	}
 }
