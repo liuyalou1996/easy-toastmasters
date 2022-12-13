@@ -6,4 +6,5 @@ package com.universe.toastmasters.service;
  */
 public interface ShortLinkService {
 
+	String generateShortLink(String longLink);
 }

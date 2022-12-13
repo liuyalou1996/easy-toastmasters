@@ -8,5 +8,5 @@ public interface ShortLinkManager {
 
 	void saveShortLink(String shortLink, String hash, String longLink);
 
-	String getShortLinkByHash(String hash);
+	String getShortLink(String hash, String longLink);
 }

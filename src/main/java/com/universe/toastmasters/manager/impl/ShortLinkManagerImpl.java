@@ -33,13 +33,13 @@ public class ShortLinkManagerImpl implements ShortLinkManager {
 	}
 
 	@Override
-	public String getShortLinkByHash(String hash){
+	public String getShortLink(String hash, String longLink) {
 		Wrapper<ShortLinkDO> wrapper = Wrappers.lambdaQuery(ShortLinkDO.class)
 			.select(ShortLinkDO::getShortLink)
 			.eq(ShortLinkDO::getHash, hash)
+			.eq(ShortLinkDO::getLongLink, longLink)
 			.last(CommonConst.LIMIT_SQL);
 		ShortLinkDO shortLinkDO = shortLinkMapper.selectOne(wrapper);
 		return Optional.ofNullable(shortLinkDO).map(ShortLinkDO::getShortLink).orElse(null);
 	}
-
 }
