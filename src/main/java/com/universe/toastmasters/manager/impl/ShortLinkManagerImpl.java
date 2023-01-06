@@ -27,6 +27,7 @@ public class ShortLinkManagerImpl implements ShortLinkManager {
 			.shortLink(shortLink)
 			.longLinkHash(longLinkHash)
 			.longLink(longLink)
+			.status(true)
 			.build();
 		shortLinkMapper.insert(shortLinkDO);
 	}

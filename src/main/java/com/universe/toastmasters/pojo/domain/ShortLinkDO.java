@@ -49,7 +49,7 @@ public class ShortLinkDO {
 	/**
 	 * 状态：1-可用，0-不可用
 	 */
-	private Integer status;
+	private boolean status;
 
 	/**
 	 * 过期时间

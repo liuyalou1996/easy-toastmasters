@@ -34,7 +34,9 @@ public class ShortLinkServiceImpl implements ShortLinkService {
 	}
 
 	private String regenerateOnHashConflict(String longLink, long longLinkHash) {
+		// 自增序列作随机盐
 		long uniqueIdHash = Hashing.murmur3_32_fixed().hashLong(SnowFlakeUtils.nextId()).padToLong();
+		// 相减主要是为了让哈希值更小
 		String shortLink = Base62Utils.encodeToBase62String(Math.abs(longLinkHash - uniqueIdHash));
 		if (!shortLinkManager.isShortLinkRepeated(shortLink)) {
 			shortLinkManager.saveShortLink(shortLink, longLinkHash, longLink);

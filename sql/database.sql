@@ -29,7 +29,7 @@ create table `t_short_link`
     `status`         tinyint      not null default 1 comment '状态：1-可用，0-不可用',
     `expiry_time`    datetime     null comment '过期时间',
     `create_time`    datetime     not null default current_timestamp comment '创建时间'
-) comment ='短链信息表';
+) comment '短链信息表';
 create index idx_sl_hash_long_link on t_short_link (long_link_hash, long_link);
 create index idx_sl_short_link on t_short_link (short_link);
 
