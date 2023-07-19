@@ -29,6 +29,7 @@
         <easyexcel.version>3.1.1</easyexcel.version>
         <commons-io.version>2.11.0</commons-io.version>
         <zxing.version>3.5.0</zxing.version>
+        <http.client.version>4.5.14</http.client.version>
     </properties>
 
     <dependencyManagement>
@@ -90,6 +91,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${http.client.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -34,3 +34,12 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     call-setters-on-nulls: true
     use-generated-keys: true
+# http client configuration
+http:
+  client:
+    max-total: 500 # 连接池最大连接数
+    default-max-per-route: 100 # 每个路由最大连接数
+    max-idle-time: 5s # 连接最大空闲时间
+    connection-request-timeout: 3s # 从连接池获取连接超时时间
+    connection-timeout: 5s # 与服务端建立连接超时时间
+    socket-timeout: 10s # 客户端从服务器读取数据超时时间
