@@ -25,7 +25,7 @@ public class MybatisPlusCodeAutoGeneration {
 	public static void main(String[] args) {
 		FastAutoGenerator.create(URL, USERNAME, PASSWORD)
 			// 开启fileOverrride重新旧文件，disableOpenDir禁用代码生成后打开输出目录对话框
-			.globalConfig(builder -> builder.author("Nick Liu").fileOverride().disableOpenDir().outputDir(OUTPUT_DIR))
+			.globalConfig(builder -> builder.author("Nick Liu").disableOpenDir().outputDir(OUTPUT_DIR))
 			// parent指定生成的代码在哪个包下，entity可以指定实体(DO)所在的包名
 			.packageConfig(builder -> builder.parent("com.universe.toastmasters").entity("pojo.domain"))
 			// addInclude指定包含的表名，不调用该方法默认为所有表生成代码；addTablePrefix可以过滤表前缀，即t_user变成user
