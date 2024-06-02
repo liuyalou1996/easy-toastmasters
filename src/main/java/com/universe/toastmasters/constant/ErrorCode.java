@@ -14,10 +14,10 @@ public interface ErrorCode {
 	/**
 	 * 非法参数
 	 */
-	String INVALID_PARAM = "A0101";
+	String INVALID_PARAM = "A1001";
 
 	/**
 	 * 系统内部异常
 	 */
-	String SYSTEM_ERROR = "B0001";
+	String SYSTEM_ERROR = "B1001";
 }

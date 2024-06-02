@@ -2,9 +2,9 @@ spring:
   # datasource configuration
   datasource:
     druid:
-      url: jdbc:mysql://gz-cdb-drh06wqx.sql.tencentcdb.com:57613/easy_toastmasters?serverTimeZone=UTC
+      url: jdbc:mysql://gz-cynosdbmysql-grp-ggabekv1.sql.tencentcdb.com:26891/xlyj_shopping_mall_dev?serverTimeZone=UTC
       username: lingbomanbu
-      password: Lyl14786632348
+      password: Lyl@14786632348
       initial-size: 5
       max-active: 200
       max-wait: 2000
