@@ -33,3 +33,15 @@ create table `t_short_link`
 create index idx_sl_hash_long_link on t_short_link (long_link_hash, long_link);
 create index idx_sl_short_link on t_short_link (short_link);
 
+# 语法官汇报表
+create table `t_grammarian_report`
+(
+    `id`             bigint primary key auto_increment comment '主键ID',
+    `report_no`      bigint       not null comment '报表编号',
+    `name`           varchar(32)  not null comment '姓名',
+    `section`        varchar(16)  null comment '会议环节',
+    `speech_figures` varchar(16)  null comment '修辞手法',
+    `sentence`       varchar(255) null comment '金句',
+    `create_time`    datetime(3)  not null default current_timestamp comment '创建时间'
+);
+
