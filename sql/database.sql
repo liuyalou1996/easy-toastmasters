@@ -44,6 +44,7 @@ create table `t_grammarian_report_overview`
     `word_of_day_count` int         not null default 0 comment '今日一词使用次数',
     `create_time`       datetime    not null default current_timestamp comment '创建时间'
 ) comment '语法官汇报概览表';
+create index `idx_tgro_report_no` on t_grammarian_report_overview(report_no);
 
 # 语法官汇报详情表
 create table `t_grammarian_report_detail`
@@ -56,3 +57,4 @@ create table `t_grammarian_report_detail`
     `sentence`       varchar(255) null comment '金句',
     `create_time`    datetime  not null default current_timestamp comment '创建时间'
 ) comment '语法官汇报详情表';
+create index `idx_tgrd_report_no` on t_grammarian_report_detail(report_no);
