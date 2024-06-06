@@ -37,7 +37,7 @@ public class GrammarianDataModel {
 	/**
 	 * 金句
 	 */
-	@ExcelProperty(index = 2, value = "金句")
+	@ExcelProperty(index = 3, value = "金句")
 	private String sentence;
 
 }

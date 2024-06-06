@@ -26,6 +26,6 @@ public class GrammarianReportDetailManagerImpl implements GrammarianReportDetail
 
 	@Override
 	public void batchSaveReportDetail(List<GrammarianReportDetailDO> reportDetailDOList) {
-
+		reportDetailMapper.batchSaveReportDetail(reportDetailDOList);
 	}
 }

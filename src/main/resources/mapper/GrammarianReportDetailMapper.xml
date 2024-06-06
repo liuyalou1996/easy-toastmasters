@@ -22,7 +22,7 @@
         insert into t_grammarian_report_detail(report_no, name, section, speech_figures, sentence)
         values
         <foreach collection="list" item="detail" open="" separator="," close="">
-            ( #{reportNo}, #{name}, #{section}, #{speechFigures}, #{sentence} )
+            ( #{detail.reportNo}, #{detail.name}, #{detail.section}, #{detail.speechFigures}, #{detail.sentence} )
         </foreach>
     </select>
 

@@ -7,6 +7,7 @@ import com.universe.toastmasters.pojo.model.GrammarianDataModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -18,7 +19,7 @@ import java.util.function.Consumer;
 @Slf4j
 public class GrammarianReportListener extends AnalysisEventListener<GrammarianDataModel> {
 
-	private List<GrammarianDataModel> result;
+	private List<GrammarianDataModel> result = new ArrayList<>();
 	private Consumer<List<GrammarianDataModel>> dataRowConsumer;
 	private Consumer<String> headRowConsumer;
 
@@ -49,7 +50,7 @@ public class GrammarianReportListener extends AnalysisEventListener<GrammarianDa
 		} else if (rowIndex > 0 && rowIndex < 4) {
 			log.info("识别到语法官报表数据概览信息,行数:{},数据:{}", rowIndex, headMap);
 			String value = headMap.values().stream().findFirst().map(v -> v.split(":")[1]).orElse(StringUtils.EMPTY);
-			headRowConsumer.accept(value);
+			headRowConsumer.accept(StringUtils.trim(value));
 		}
 	}
 }
