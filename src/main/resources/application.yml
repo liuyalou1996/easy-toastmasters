@@ -34,6 +34,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     call-setters-on-nulls: true
     use-generated-keys: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 # http client configuration
 http:
   client:

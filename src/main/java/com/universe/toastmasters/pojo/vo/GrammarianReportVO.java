@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Nick Liu
@@ -42,7 +43,7 @@ public class GrammarianReportVO {
 	 */
 	private Integer wordOfDayCount;
 
-	private List<GrammarianReportDetailVO> details;
+	private Map<String, List<GrammarianReportDetailVO>> reportDetailMap;
 
 	@Data
 	@Builder
@@ -68,6 +69,6 @@ public class GrammarianReportVO {
 		/**
 		 * 金句
 		 */
-		private String sentence;
+		private List<String> sentences;
 	}
 }

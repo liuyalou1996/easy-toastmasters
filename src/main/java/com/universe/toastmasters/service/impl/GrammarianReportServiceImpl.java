@@ -13,13 +13,13 @@ import com.universe.toastmasters.util.EasyExcelUtils;
 import com.universe.toastmasters.util.SnowFlakeUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -74,11 +74,12 @@ public class GrammarianReportServiceImpl implements GrammarianReportService {
 		}
 
 		List<GrammarianReportDetailDO> reportDetailDOList = reportDetailManager.listReportDetails(reportNo);
-		List<GrammarianReportDetailVO> detailVOList = reportDetailDOList.stream().map(reportDetailDO -> {
+		Map<String, List<GrammarianReportDetailVO>> reportDetailMap = reportDetailDOList.stream().map(reportDetailDO -> {
 			GrammarianReportDetailVO reportDetailVO = new GrammarianReportDetailVO();
 			BeanUtils.copyProperties(reportDetailDO, reportDetailVO);
+			reportDetailVO.setSentences(Arrays.stream(StringUtils.split(reportDetailDO.getSentence(), ";")).map(StringUtils::trim).collect(Collectors.toList()));
 			return reportDetailVO;
-		}).collect(Collectors.toList());
+		}).collect(Collectors.groupingBy(GrammarianReportDetailVO::getName, LinkedHashMap::new, Collectors.toList()));
 
 		return GrammarianReportVO.builder()
 			.reportNo(reportOverviewDO.getReportNo())
@@ -86,7 +87,7 @@ public class GrammarianReportServiceImpl implements GrammarianReportService {
 			.reporter(reportOverviewDO.getReporter())
 			.wordOfDay(reportOverviewDO.getWordOfDay())
 			.wordOfDayCount(reportOverviewDO.getWordOfDayCount())
-			.details(detailVOList)
+			.reportDetailMap(reportDetailMap)
 			.build();
 	}
 

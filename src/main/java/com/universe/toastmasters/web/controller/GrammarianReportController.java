@@ -46,7 +46,6 @@ public class GrammarianReportController {
 		HttpHeaders respHeaders = new HttpHeaders();
 		respHeaders.setContentDisposition(ContentDisposition.attachment().filename(FILE_NAME, StandardCharsets.UTF_8).build());
 		respHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-
 		return new ResponseEntity<>(body, respHeaders, HttpStatus.CREATED);
 	}
 
