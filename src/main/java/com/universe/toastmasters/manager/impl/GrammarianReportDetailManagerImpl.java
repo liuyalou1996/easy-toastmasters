@@ -1,5 +1,7 @@
 package com.universe.toastmasters.manager.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.universe.toastmasters.manager.GrammarianReportDetailManager;
 import com.universe.toastmasters.mapper.GrammarianReportDetailMapper;
 import com.universe.toastmasters.pojo.domain.GrammarianReportDetailDO;
@@ -27,5 +29,12 @@ public class GrammarianReportDetailManagerImpl implements GrammarianReportDetail
 	@Override
 	public void batchSaveReportDetail(List<GrammarianReportDetailDO> reportDetailDOList) {
 		reportDetailMapper.batchSaveReportDetail(reportDetailDOList);
+	}
+
+	@Override
+	public List<GrammarianReportDetailDO> listReportDetails(long reportNo) {
+		Wrapper<GrammarianReportDetailDO> wrapper = Wrappers.<GrammarianReportDetailDO>lambdaQuery()
+			.eq(GrammarianReportDetailDO::getReportNo, reportNo);
+		return reportDetailMapper.selectList(wrapper);
 	}
 }

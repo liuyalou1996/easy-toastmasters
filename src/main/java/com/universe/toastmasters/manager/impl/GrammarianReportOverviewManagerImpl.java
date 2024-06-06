@@ -1,5 +1,8 @@
 package com.universe.toastmasters.manager.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.universe.toastmasters.constant.CommonConst;
 import com.universe.toastmasters.manager.GrammarianReportOverviewManager;
 import com.universe.toastmasters.mapper.GrammarianReportOverviewMapper;
 import com.universe.toastmasters.pojo.domain.GrammarianReportOverviewDO;
@@ -19,5 +22,13 @@ public class GrammarianReportOverviewManagerImpl implements GrammarianReportOver
 	@Override
 	public void saveReportOverview(GrammarianReportOverviewDO reportOverviewDO) {
 		reportOverviewMapper.insert(reportOverviewDO);
+	}
+
+	@Override
+	public GrammarianReportOverviewDO getReportOverview(long reportNo) {
+		Wrapper<GrammarianReportOverviewDO> wrapper = Wrappers.<GrammarianReportOverviewDO>lambdaQuery()
+			.eq(GrammarianReportOverviewDO::getReportNo, reportNo)
+			.last(CommonConst.LIMIT_SQL);
+		return reportOverviewMapper.selectOne(wrapper);
 	}
 }

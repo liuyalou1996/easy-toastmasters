@@ -1,5 +1,7 @@
 package com.universe.toastmasters.service;
 
+import com.universe.toastmasters.pojo.vo.GrammarianReportVO;
+
 import java.io.InputStream;
 
 /**
@@ -9,4 +11,6 @@ import java.io.InputStream;
 public interface GrammarianReportService {
 
 	String resolveUploadReport(InputStream is);
+
+	GrammarianReportVO queryGrammarianReport(long reportNo);
 }

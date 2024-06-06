@@ -9,4 +9,6 @@ import com.universe.toastmasters.pojo.domain.GrammarianReportOverviewDO;
 public interface GrammarianReportOverviewManager {
 
 	void saveReportOverview(GrammarianReportOverviewDO reportOverviewDO);
+
+	GrammarianReportOverviewDO getReportOverview(long reportNo);
 }

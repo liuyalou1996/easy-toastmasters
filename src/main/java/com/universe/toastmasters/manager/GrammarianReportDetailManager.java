@@ -13,4 +13,6 @@ public interface GrammarianReportDetailManager {
 	void saveReportDetail(GrammarianReportDetailDO reportDetailDO);
 
 	void batchSaveReportDetail(List<GrammarianReportDetailDO> reportDetailDOList);
+
+	List<GrammarianReportDetailDO> listReportDetails(long reportNo);
 }

@@ -5,6 +5,8 @@ import com.universe.toastmasters.manager.GrammarianReportOverviewManager;
 import com.universe.toastmasters.pojo.domain.GrammarianReportDetailDO;
 import com.universe.toastmasters.pojo.domain.GrammarianReportOverviewDO;
 import com.universe.toastmasters.pojo.model.GrammarianDataModel;
+import com.universe.toastmasters.pojo.vo.GrammarianReportVO;
+import com.universe.toastmasters.pojo.vo.GrammarianReportVO.GrammarianReportDetailVO;
 import com.universe.toastmasters.service.GrammarianReportService;
 import com.universe.toastmasters.service.listener.GrammarianReportListener;
 import com.universe.toastmasters.util.EasyExcelUtils;
@@ -62,6 +64,30 @@ public class GrammarianReportServiceImpl implements GrammarianReportService {
 		reportDetailManager.batchSaveReportDetail(reportDetailDOList);
 
 		return String.valueOf(reportNo);
+	}
+
+	@Override
+	public GrammarianReportVO queryGrammarianReport(long reportNo) {
+		GrammarianReportOverviewDO reportOverviewDO = reportOverviewManager.getReportOverview(reportNo);
+		if (reportOverviewDO == null) {
+			return new GrammarianReportVO();
+		}
+
+		List<GrammarianReportDetailDO> reportDetailDOList = reportDetailManager.listReportDetails(reportNo);
+		List<GrammarianReportDetailVO> detailVOList = reportDetailDOList.stream().map(reportDetailDO -> {
+			GrammarianReportDetailVO reportDetailVO = new GrammarianReportDetailVO();
+			BeanUtils.copyProperties(reportDetailDO, reportDetailVO);
+			return reportDetailVO;
+		}).collect(Collectors.toList());
+
+		return GrammarianReportVO.builder()
+			.reportNo(reportOverviewDO.getReportNo())
+			.title(reportOverviewDO.getTitle())
+			.reporter(reportOverviewDO.getReporter())
+			.wordOfDay(reportOverviewDO.getWordOfDay())
+			.wordOfDayCount(reportOverviewDO.getWordOfDayCount())
+			.details(detailVOList)
+			.build();
 	}
 
 }
